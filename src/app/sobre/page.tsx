@@ -7,7 +7,7 @@ import { about, siteConfig } from "@/lib/content";
 import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
-  title: "Sobre",
+  title: "Sobre mí",
   description:
     "Fabián Canoni es CFO Fractional. Más de 14 años acompañando a dueños de PyMEs a decidir con información clara.",
   alternates: { canonical: `${siteConfig.url}/sobre` },
@@ -17,7 +17,7 @@ export default function SobrePage() {
   return (
     <>
       <PageHero
-        eyebrow="Sobre"
+        eyebrow="Sobre mí"
         title="Hola, soy Fabián"
         lead={about.intro}
         image={images.portraitGesture}

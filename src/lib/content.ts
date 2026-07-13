@@ -26,7 +26,7 @@ export const siteConfig = {
 } as const;
 
 export const navLinks = [
-  { href: "/sobre", label: "Sobre" },
+  { href: "/sobre", label: "Sobre mí" },
   { href: "/servicios", label: "Cómo trabajo" },
   { href: "/en-clave-pyme", label: "Newsletter" },
   { href: "/off-the-record", label: "Podcast" },
