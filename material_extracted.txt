@@ -1,0 +1,200 @@
+﻿Times New Roman;
+Times New Roman;
+Times New Roman;
+Times New Roman;
+Times New Roman;
+Times New Roman;
+Times New Roman;
+ Times New Roman CE;
+ Times New Roman Cyr;
+ Times New Roman Greek;
+ Times New Roman Tur;
+ Times New Roman (Hebrew);
+ Times New Roman (Arabic);
+ Times New Roman Baltic;
+ Times New Roman (Vietnamese);
+ Arial (Vietnamese);
+ Calibri (Hebrew);
+ Calibri (Arabic);
+ Calibri (Vietnamese);
+ Times New Roman CE;
+ Times New Roman Cyr;
+ Times New Roman Greek;
+ Times New Roman Tur;
+ Times New Roman (Hebrew);
+ Times New Roman (Arabic);
+ Times New Roman Baltic;
+ Times New Roman (Vietnamese);
+ Times New Roman CE;
+ Times New Roman Cyr;
+ Times New Roman Greek;
+ Times New Roman Tur;
+ Times New Roman (Hebrew);
+ Times New Roman (Arabic);
+ Times New Roman Baltic;
+ Times New Roman (Vietnamese);
+ Calibri Light CE;
+ Calibri Light Cyr;
+ Calibri Light Greek;
+ Calibri Light Tur;
+ Calibri Light (Hebrew);
+ Calibri Light (Arabic);
+ Calibri Light Baltic;
+ Calibri Light (Vietnamese);
+ Times New Roman CE;
+ Times New Roman Cyr;
+ Times New Roman Greek;
+ Times New Roman Tur;
+ Times New Roman (Hebrew);
+ Times New Roman (Arabic);
+ Times New Roman Baltic;
+ Times New Roman (Vietnamese);
+ Times New Roman CE;
+ Times New Roman Cyr;
+ Times New Roman Greek;
+ Times New Roman Tur;
+ Times New Roman (Hebrew);
+ Times New Roman (Arabic);
+ Times New Roman Baltic;
+ Times New Roman (Vietnamese);
+ Times New Roman CE;
+ Times New Roman Cyr;
+ Times New Roman Greek;
+ Times New Roman Tur;
+ Times New Roman (Hebrew);
+ Times New Roman (Arabic);
+ Times New Roman Baltic;
+ Times New Roman (Vietnamese);
+ Calibri (Hebrew);
+ Calibri (Arabic);
+ Calibri (Vietnamese);
+ Times New Roman CE;
+ Times New Roman Cyr;
+ Times New Roman Greek;
+ Times New Roman Tur;
+ Times New Roman (Hebrew);
+ Times New Roman (Arabic);
+ Times New Roman Baltic;
+ Times New Roman (Vietnamese);
+\* Default Paragraph Font;
+//schemas.microsoft.com/office/word/2003/wordml
+HYPERLINK "https://www.youtube.com/watch?v=Nf2calxXrms" 
+ está s comprometido y de qué te vas a hacer cargo.
+ HYPERLINK "https://www.instagram.com/fabiancanoni/" \ "_blank"
+ https://www.instagram.com
+ HYPERLINK "https://www.linkedin.com/in/fabiancanoni/" \ "_blank"
+ link edin.com/in/fabiancanoni/
+ HYPERLINK "https://www.linkedin.com/newsletters/en-clave-pyme-7462332384512782336/" \ "_blank"
+ https://www.linkedin.com
+ newsletters/en-clave-pyme
+\* 504b030414000600080000002100e9de0fbfff0000001c020000130000005b436f6e74656e745f54797065735d2e786d6cac91cb4ec3301045f748fc83e52d4a
+9cb2400825e982c78ec7a27cc0c8992416c9d8b2a755fbf74cd25442a820166c2cd933f79e3be372bd1f07b5c3989ca74aaff2422b24eb1b475da5df374fd9ad
+5689811a183c61a50f98f4babebc2837878049899a52a57be670674cb23d8e90721f90a4d2fa3802cb35762680fd800ecd7551dc18eb899138e3c943d7e503b6
+b01d583deee5f99824e290b4ba3f364eac4a430883b3c092d4eca8f946c916422ecab927f52ea42b89a1cd59c254f919b0e85e6535d135a8de20f20b8c12c3b0
+0c895fcf6720192de6bf3b9e89ecdbd6596cbcdd8eb28e7c365ecc4ec1ff1460f53fe813d3cc7f5b7f020000ffff0300504b030414000600080000002100a5d6
+a7e7c0000000360100000b0000005f72656c732f2e72656c73848fcf6ac3300c87ef85bd83d17d51d2c31825762fa590432fa37d00e1287f68221bdb1bebdb4f
+c7060abb0884a4eff7a93dfeae8bf9e194e720169aaa06c3e2433fcb68e1763dbf7f82c985a4a725085b787086a37bdbb55fbc50d1a33ccd311ba548b6309512
+a1a82fe353bd90a865aad41ed0b5b8f9d6fd010000ffff0300504b0304140006000800000021006b799616830000008a0000001c0000007468656d652f746865
+6d652f7468656d654d616e616765722e786d6c0ccc4d0ac3201040e17da17790d93763bb284562b2cbaebbf600439c1a41c7a0d29fdbd7e5e38337cedf14d59b
+4757e8d3f729e245eb2b260a0238fd010000ffff0300504b030414000600080000002100a7259ef29c070000cb200000160000007468656d652f7468656d652f
+7468656d65312e786d6cec59cd8b1bc915bf07f23f347d97f5d5ad8fc1f2a24fcfda33b6b164873dd648a5eef2547789aad28cc56208de532e81c026e49085bd
+ed21842cecc22eb9e48f31d8249b3f22afaa5bdd5552c99e191c3061463074977eefd5afde7bf5de53d5ddcf5e26d4bbc05c1096f6fcfa9d9aefe174ce16248d
+7afeb3d9a4d2f13d2151ba4094a5b8e76fb0f03fbbf7eb5fdd454732c609f6403e1547a8e7c752ae8eaa5531876124eeb0154ee1bb25e30992f0caa3ea82a34b
+d09bd06aa3566b55134452df4b51026a6720e32db0f778b92473ecdfdbaa1f53982395420dcc299f2ae5389731b08bf3ba42888d1852ee5d20daf361a605bb9c
+e197d2f7281212bee8f935fde757efddada2a35c88ca03b286dc44ffe572b9c0e2bca1e7e4d1593169108441ab5fe8d7002af771e3f6b8356e15fa3400cde7b0
+d28c8badb3dd180639d600658f0edda3f6a859b7f086fee61ee77ea83e165e8332fdc11e7e321982152dbc0665f8700f1f0eba8391ad5f83327c6b0fdfaef547
+2839e3c43b21510c81b7422913305c6bd426b526fc579f403f698fa2238c0c69c50b9888bd21c5c713734e56b2e73f00adbe0179fbf3cf6f5efff8e6f54f6fbe
+faeacdebbfe7736b5596dc314a2353ee97effef09f6f7eebfdfb876f7ff9fa8fd9d4bb7861e2dffded77effef1cff7a9871597a678fba7efdffdf8fddb3ffffe
+5f7ffddaa1bdcfd199099f91040bef11bef49eb20416e8e08fcff8f524663122a6443f8d044a919ac5a17f2c630bfd68832872e006d8b6e3730ea9c605bcbf7e
+61119ec67c2d8943e3c338b180a78cd101e34e2b3c547319669eadd3c83d395f9bb8a7085db8e61ea2d4f2f278bd821c4b5c2a8731b6683ea1289528c229969e
+fa8e9d63ec58dd178458763d2573ce045b4aef0be20d10719a6446ceac682a858e49027ed9b80882bf2ddb9c3ef7068cba563dc2173612f606a20ef2334c2d33
+a364e5c24e491a9bd8cfc5398428f29e30e9829f327b87a877f0034a0fbafb39c196bb3f9c0d9e418635299501a2be5973872fef6366c5ef74439708bb524d9f
+27568aed73e28c8ec13ab242fb04638a2ed10263efd9e70e0603b6b26c5e927e10435639c6aec07a80ec5855ef2916d8d3cdcd7e9e3c21c20ad9298ed8013ea7
+9b9dc4b3416982f821cd8fc0eba6cdc750ea1257003ca6f37313f888401708f1e234ca63013a8ce03ea8f5498cac02a6de853b5e37dcf2df55f618eccb17168d
+2bec4b90c1d79681c46ecabcd7363344ad09ca809921e8325ce916442cf79722aab86ab1b5536e696fdad20dd01d594d4f42d20f76403bbd4ff8bfeb7da0c378
+fb976f1c9bede3f43b6ec556b2ba66a77328991ceff4378770bb5dcd90f105f9f49b9a115aa74f30d491fd8c75dbd3dcf634feff7d4f73683fdf763287fa8ddb
+4ec6870ee3b693c90f573e4e2753362fd0d7a8038feca0471ffb24074f7d9684d2a9dc507c22f4c18f80df338b090c2a397de6898b53c0550c8faaccc104162e
+e248cb789cc9df10194f63b482d3a1baaf944422571d096fc5041c1ae961a76e85a7ebe4942db2c3ce7a5d1d6c66955520598ed7c2621c0eaa64866eb5cb03bc
+42bd661be983d62d01257b1d12c6643689a683447b3ba88ca48f75c1680e127a651f8545d7c1a2a3d46f5db5c702a8155e811fdc1efc4ceff96100222004e771
+d09c2f949f32576fbdab9df9313d7dc89856044083bd8d80d2d35dc5f5e0f2d4eab250bb82a72d1246b8d924b46574832762f8199c47a71abd0a8debfaba5bba
+d4a2a74ca1e783d02a69b43bef6371535f83dc6e6ea0a9992968ea5df6fc5633849099a355cf5fc2a1313c262b881da17e73211ac1ddcb5cf26cc3df24b3acb8
+a0a3df0a1b186ff99ac1a08649f2427816a9026b1ad5aaa645d5c8381cacba1f1652963392665933adaca2aaa63b8b59336ccbc08e2d6f56e40d565b13434e33
+2b7c96ba77536e779beb76fa84a24a80c10bfb39aaee150a8241ad9ccca2a618efa76195b3f351bb766c17f8016a57291246d66f6dd5eed8ada811cee960f046
+951fe476a3168696dbbe525b5adf9b9b17dbecec05248f1174b96b2a8576255c5b73040dd154f72459da802df252e65b039ebc35273dffcb5ad80f868d7058a9
+75c271256806b54a27ec372bfd306cd6c761bd361a345e41619171520fb33bfb095c60d04d7e73afc7f76eef93ed1dcd9d394baa4cdfca5735717d7b5f6f58b7
+f7d94dbc375397f3be4720e97cd96a4cbacdeea055e936fb934a301a742add616b5019b586edd164340c3bddc92bdfbbd0e0a0df1c06ad71a7d2aa0f8795a055
+53f43bdd4a3b6834fa41bbdf1907fd57791b032bcfd2476e0b30afe675efbf000000ffff0300504b0304140006000800000021000dd1909fb60000001b010000
+d0add40384e4350d363f2451eced0dae2c082e8761be9969bb979dc9136332de3168aa1a083ae995719ac16db8ec8e4052164e89d93b64b060828e6f37ed1567
+914b284d262452282e3198720e274a939cd08a54f980ae38a38f56e422a3a641c8bbd048f7757da0f19b017cc524bd62107bd5001996509affb3fd381a89672f
+1f165dfe514173d9850528a2c6cce0239baa4c04ca5bbabac4df000000ffff0300504b01022d0014000600080000002100e9de0fbfff0000001c020000130000
+ Normal; heading 1;
+ heading 2; heading 3; heading 4;
+ heading 5; heading 6; heading 7;
+ heading 8; heading 9; index 1;
+ index 2; index 3; index 4; index 5;
+ index 6; index 7; index 8; index 9;
+ toc 7; toc 8; toc 9; Normal Indent;
+ footnote text; annotation text; header; footer;
+ index heading; caption; table of figures;
+ envelope address; envelope return; footnote reference; annotation reference;
+ line number; page number; endnote reference; endnote text;
+ table of authorities; macro; toa heading; List;
+ List Bullet; List Number; List 2; List 3;
+ List 4; List 5; List Bullet 2; List Bullet 3;
+ List Bullet 4; List Bullet 5; List Number 2; List Number 3;
+ List Number 4; List Number 5; Title; Closing;
+ Signature; Default Paragraph Font; Body Text; Body Text Indent;
+ List Continue; List Continue 2; List Continue 3; List Continue 4;
+ List Continue 5; Message Header; Subtitle; Salutation;
+ Date; Body Text First Indent; Body Text First Indent 2; Note Heading;
+ Body Text 2; Body Text 3; Body Text Indent 2; Body Text Indent 3;
+ Block Text; Hyperlink; FollowedHyperlink; Strong;
+ Emphasis; Document Map; Plain Text; E-mail Signature;
+ HTML Top of Form; HTML Bottom of Form; Normal (Web); HTML Acronym;
+ HTML Address; HTML Cite; HTML Code; HTML Definition;
+ HTML Keyboard; HTML Preformatted; HTML Sample; HTML Typewriter;
+ HTML Variable; Normal Table; annotation subject; No List;
+ Outline List 1; Outline List 2; Outline List 3; Table Simple 1;
+ Table Simple 2; Table Simple 3; Table Classic 1; Table Classic 2;
+ Table Classic 3; Table Classic 4; Table Colorful 1; Table Colorful 2;
+ Table Colorful 3; Table Columns 1; Table Columns 2; Table Columns 3;
+ Table Columns 4; Table Columns 5; Table Grid 1; Table Grid 2;
+ Table Grid 3; Table Grid 4; Table Grid 5; Table Grid 6;
+ Table Grid 7; Table Grid 8; Table List 1; Table List 2;
+ Table List 3; Table List 4; Table List 5; Table List 6;
+ Table List 7; Table List 8; Table 3D effects 1; Table 3D effects 2;
+ Table 3D effects 3; Table Contemporary; Table Elegant; Table Professional;
+ Table Subtle 1; Table Subtle 2; Table Web 1; Table Web 2;
+ Table Web 3; Balloon Text; Table Grid; Table Theme; Placeholder Text;
+ No Spacing; Light Shading; Light List; Light Grid; Medium Shading 1; Medium Shading 2;
+ Medium List 1; Medium List 2; Medium Grid 1; Medium Grid 2; Medium Grid 3; Dark List;
+ Colorful Shading; Colorful List; Colorful Grid; Light Shading Accent 1; Light List Accent 1;
+ Light Grid Accent 1; Medium Shading 1 Accent 1; Medium Shading 2 Accent 1; Medium List 1 Accent 1; Revision;
+ List Paragraph; Quote; Intense Quote; Medium List 2 Accent 1; Medium Grid 1 Accent 1;
+ Medium Grid 2 Accent 1; Medium Grid 3 Accent 1; Dark List Accent 1; Colorful Shading Accent 1; Colorful List Accent 1;
+ Colorful Grid Accent 1; Light Shading Accent 2; Light List Accent 2; Light Grid Accent 2; Medium Shading 1 Accent 2;
+ Medium Shading 2 Accent 2; Medium List 1 Accent 2; Medium List 2 Accent 2; Medium Grid 1 Accent 2; Medium Grid 2 Accent 2;
+ Medium Grid 3 Accent 2; Dark List Accent 2; Colorful Shading Accent 2; Colorful List Accent 2; Colorful Grid Accent 2;
+ Light Shading Accent 3; Light List Accent 3; Light Grid Accent 3; Medium Shading 1 Accent 3; Medium Shading 2 Accent 3;
+ Medium List 1 Accent 3; Medium List 2 Accent 3; Medium Grid 1 Accent 3; Medium Grid 2 Accent 3; Medium Grid 3 Accent 3;
+ Dark List Accent 3; Colorful Shading Accent 3; Colorful List Accent 3; Colorful Grid Accent 3; Light Shading Accent 4;
+ Light List Accent 4; Light Grid Accent 4; Medium Shading 1 Accent 4; Medium Shading 2 Accent 4; Medium List 1 Accent 4;
+ Medium List 2 Accent 4; Medium Grid 1 Accent 4; Medium Grid 2 Accent 4; Medium Grid 3 Accent 4; Dark List Accent 4;
+ Colorful Shading Accent 4; Colorful List Accent 4; Colorful Grid Accent 4; Light Shading Accent 5; Light List Accent 5;
+ Light Grid Accent 5; Medium Shading 1 Accent 5; Medium Shading 2 Accent 5; Medium List 1 Accent 5; Medium List 2 Accent 5;
+ Medium Grid 1 Accent 5; Medium Grid 2 Accent 5; Medium Grid 3 Accent 5; Dark List Accent 5; Colorful Shading Accent 5;
+ Colorful List Accent 5; Colorful Grid Accent 5; Light Shading Accent 6; Light List Accent 6; Light Grid Accent 6;
+ Medium Shading 1 Accent 6; Medium Shading 2 Accent 6; Medium List 1 Accent 6; Medium List 2 Accent 6;
+ Medium Grid 1 Accent 6; Medium Grid 2 Accent 6; Medium Grid 3 Accent 6; Dark List Accent 6; Colorful Shading Accent 6;
+ Colorful List Accent 6; Colorful Grid Accent 6; Subtle Emphasis; Intense Emphasis;
+ Subtle Reference; Intense Reference; Book Title; Bibliography;
+ TOC Heading; Plain Table 1; Plain Table 2; Plain Table 3; Plain Table 4;
+ Plain Table 5; Grid Table Light; Grid Table 1 Light; Grid Table 2; Grid Table 3; Grid Table 4;
+ Grid Table 5 Dark; Grid Table 6 Colorful; Grid Table 7 Colorful; Grid Table 1 Light Accent 1; Grid Table 2 Accent 1;
+ Grid Table 3 Accent 1; Grid Table 4 Accent 1; Grid Table 5 Dark Accent 1; Grid Table 6 Colorful Accent 1;
+ Grid Table 7 Colorful Accent 1; Grid Table 1 Light Accent 2; Grid Table 2 Accent 2; Grid Table 3 Accent 2;
+ Grid Table 4 Accent 2; Grid Table 5 Dark Accent 2; Grid Table 6 Colorful Accent 2; Grid Table 7 Colorful Accent 2;
+ Grid Table 1 Light Accent 3; Grid Table 2 Accent 3; Grid Table 3 Accent 3; Grid Table 4 Accent 3;
+ Grid Table 5 Dark Accent 3; Grid Table 6 Colorful Accent 3; Grid Table 7 Colorful Accent 3; Grid Table 1 Light Accent 4;
+ Grid Table 2 Accent 4; Grid Table 3 Accent 4; Grid Table 4 Accent 4; Grid Table 5 Dark Accent 4;
+ Grid Table 6 Colorful Accent 4; Grid Table 7 Colorful Accent 4; Grid Table 1 Light Accent 5; Grid Table 2 Accent 5;
