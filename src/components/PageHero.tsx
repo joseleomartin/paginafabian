@@ -12,7 +12,10 @@ type Props = {
   eyebrow: string;
   title: string;
   lead: string;
-  image: HeroImage;
+  image?: HeroImage;
+  /** Embed de YouTube (reemplaza la imagen) */
+  videoEmbedUrl?: string;
+  videoTitle?: string;
   /** object-fit contain — para piezas gráficas */
   contain?: boolean;
   /** Fondo oscuro en el panel de imagen */
@@ -29,12 +32,15 @@ export function PageHero({
   title,
   lead,
   image,
+  videoEmbedUrl,
+  videoTitle,
   contain = false,
   darkVisual = false,
   frame = "default",
 }: Props) {
   const isPortrait = frame === "portrait";
-  const isGraphic = frame === "graphic";
+  const isGraphic = frame === "graphic" || Boolean(videoEmbedUrl);
+  const showVideo = Boolean(videoEmbedUrl);
 
   return (
     <header
@@ -56,28 +62,40 @@ export function PageHero({
       <div
         className={[
           "page-hero-visual",
-          darkVisual ? "page-hero-visual--dark" : "",
+          darkVisual || showVideo ? "page-hero-visual--dark" : "",
           contain ? "page-hero-visual--contain" : "",
           isPortrait ? "page-hero-visual--portrait" : "",
           isGraphic ? "page-hero-visual--graphic" : "",
+          showVideo ? "page-hero-visual--video" : "",
         ]
           .filter(Boolean)
           .join(" ")}
       >
-        <Image
-          src={image.src}
-          alt={image.alt}
-          fill
-          priority
-          sizes="(max-width: 900px) 100vw, 52vw"
-          className={contain ? "img-contain" : "img-cover"}
-          style={{
-            objectFit: contain ? "contain" : "cover",
-            objectPosition:
-              image.position ??
-              (isPortrait ? "55% 12%" : isGraphic ? "50% 50%" : "50% 28%"),
-          }}
-        />
+        {showVideo ? (
+          <iframe
+            src={videoEmbedUrl}
+            title={videoTitle ?? title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        ) : image ? (
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            priority
+            sizes="(max-width: 900px) 100vw, 52vw"
+            className={contain ? "img-contain" : "img-cover"}
+            style={{
+              objectFit: contain ? "contain" : "cover",
+              objectPosition:
+                image.position ??
+                (isPortrait ? "55% 12%" : isGraphic ? "50% 50%" : "50% 28%"),
+            }}
+          />
+        ) : null}
       </div>
     </header>
   );

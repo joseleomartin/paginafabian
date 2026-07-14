@@ -42,7 +42,7 @@ export function Header() {
           <Link
             href="/"
             className="logo"
-            aria-label={`${siteConfig.name} — inicio`}
+            aria-label={`${siteConfig.name}, inicio`}
           >
             Fabián Canoni<span>.</span>
           </Link>

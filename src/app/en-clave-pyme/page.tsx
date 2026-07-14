@@ -20,7 +20,8 @@ export default function NewsletterPage() {
         eyebrow="Newsletter"
         title={newsletter.name}
         lead={newsletter.tagline}
-        image={images.ytFeatured}
+        videoEmbedUrl={newsletter.youtubeEmbedUrl}
+        videoTitle={newsletter.youtubeTitle}
         darkVisual
         frame="graphic"
       />

@@ -60,7 +60,7 @@ export default function PodcastPage() {
             <div className="video-embed">
               <iframe
                 src={podcast.embedUrl}
-                title={`${podcast.name} — playlist de YouTube`}
+                title={`${podcast.name}, playlist de YouTube`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 loading="lazy"

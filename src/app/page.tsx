@@ -110,7 +110,7 @@ export default function HomePage() {
               <p className="eyebrow">Cómo trabajo</p>
               <h2>Acompañamiento concreto para decidir mejor</h2>
               <p className="lead">
-                Claridad en caja, costos y estrategia — sin sumar estructura
+                Claridad en caja, costos y estrategia, sin sumar estructura
                 innecesaria.
               </p>
             </div>

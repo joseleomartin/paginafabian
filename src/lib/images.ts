@@ -149,7 +149,7 @@ export const images = {
   /** Podcast hero — frame YouTube ep.1 */
   otrFrameEp1: {
     src: "/images/social-otr-frame-ep1.jpg",
-    alt: "Off the Record — episodio con Emilio Mata",
+    alt: "Off the Record, episodio con Emilio Mata",
     width: 1280,
     height: 720,
     position: "28% 42%",
@@ -167,7 +167,7 @@ export const images = {
   /** Home card podcast — frame YouTube ep.2 */
   otrFrameEp2: {
     src: "/images/social-otr-frame-ep2.jpg",
-    alt: "Off the Record — conversación con invitado",
+    alt: "Off the Record, conversación con invitado",
     width: 1280,
     height: 720,
     position: "50% 40%",
@@ -209,7 +209,7 @@ export const images = {
   credentials: [
     {
       src: "/images/cred-handshake.jpg",
-      alt: "Reconocimiento institucional — entrega de diploma",
+      alt: "Reconocimiento institucional, entrega de diploma",
       width: 1200,
       height: 808,
       position: "50% 35%",

@@ -18,7 +18,7 @@ export default function ServiciosPage() {
       <PageHero
         eyebrow="Cómo trabajo"
         title="Claridad financiera para dueños que deciden"
-        lead="Acompañamiento en caja, costos, presupuesto y estrategia — con alguien que lee los números en clave de negocio."
+        lead="Acompañamiento en caja, costos, presupuesto y estrategia, con alguien que lee los números en clave de negocio."
         image={images.stageTalk}
       />
 

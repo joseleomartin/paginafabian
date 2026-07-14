@@ -51,6 +51,13 @@ export function Footer() {
               >
                 Instagram
               </a>
+              <a
+                href={siteConfig.social.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                YouTube
+              </a>
             </div>
           </div>
 

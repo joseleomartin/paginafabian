@@ -15,9 +15,9 @@ export function ContactForm() {
     const company = String(data.get("company") || "").trim();
     const message = String(data.get("message") || "").trim();
 
-    const subject = encodeURIComponent(`Consulta desde la web — ${name}`);
+    const subject = encodeURIComponent(`Consulta desde la web: ${name}`);
     const body = encodeURIComponent(
-      `Nombre: ${name}\nEmail: ${email}\nEmpresa: ${company || "—"}\n\n${message}`
+      `Nombre: ${name}\nEmail: ${email}\nEmpresa: ${company || "Sin indicar"}\n\n${message}`
     );
 
     // Abre el cliente de correo con los datos del formulario.

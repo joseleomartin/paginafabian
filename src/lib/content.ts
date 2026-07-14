@@ -7,10 +7,10 @@ export const siteConfig = {
   locale: "es_AR",
   tagline: "Detrás de cada número hay una decisión.",
   mission:
-    "Ayudo a dueños de PyMEs a leer la información financiera en clave de negocio — y a decidir con más claridad.",
+    "Ayudo a dueños de PyMEs a leer la información financiera en clave de negocio, y a decidir con más claridad.",
   role: "CFO Fractional",
   email: "fcanoni@estudiomartin.com",
-  phone: "+54 9 11 6743-4637",
+  phone: "+54 9 11 6743 4637",
   phoneHref: "tel:+5491167434637",
   whatsapp: "https://wa.me/5491167434637",
   address: "Buenos Aires, Argentina",
@@ -72,11 +72,11 @@ export const services = [
     title: "Coaching + finanzas",
     summary: "Porque el problema casi nunca es solo técnico.",
     description:
-      "Planificación concreta con coaching ejecutivo. Acompaño la decisión — no solo el Excel.",
+      "Planificación concreta con coaching ejecutivo. Acompaño la decisión, no solo el Excel.",
     outcomes: [
       "Claridad para decidir",
       "Conversaciones difíciles",
-      "Alineación números–estrategia",
+      "Alineación números y estrategia",
       "Liderazgo financiero del dueño",
     ],
   },
@@ -98,7 +98,7 @@ export const services = [
 export const about = {
   headline: "Los dueños deciden todos los días. Pocos lo hacen con información clara.",
   intro:
-    "Más de 14 años acompañando a empresarios argentinos. Mi trabajo es que los números dejen de ser un trámite y pasen a ser una brújula.",
+    "Más de 14 años acompañando a empresarios y PyMEs. Mi trabajo es que los números dejen de ser un trámite y pasen a ser una brújula.",
   body: [
     "Trabajo con dueños de PyMEs que tienen un problema concreto: toman decisiones importantes sin información financiera clara.",
     "No porque no sean capaces. Sino porque nadie les tradujo los números a lenguaje de negocio.",
@@ -106,7 +106,7 @@ export const about = {
     "Acompaño a empresarios y emprendedores en el proceso de convertir su contabilidad en una herramienta de decisión real.",
     "Lo hago desde dos lugares: como CFO Fractional, siendo el área financiera que muchas PyMEs no pueden tener internamente. Y como CEO de EMA Group Consultores, donde un equipo de más de 30 profesionales trabaja en finanzas, impuestos, auditoría, payroll y outsourcing administrativo para empresas tanto locales como internacionales.",
     "Mi metodología combina planificación financiera concreta con coaching ejecutivo. Porque detrás de cada número hay una decisión. Y detrás de cada decisión, hay una conversación que vale la pena tener.",
-    "Si tenés una PyME y sentís que los números no te hablan con claridad — escribime.",
+    "Si tenés una PyME y sentís que los números no te hablan con claridad.",
   ],
   credentials: [
     "Licenciado en Administración (UBA)",
@@ -117,7 +117,7 @@ export const about = {
     "Expositor y capacitador en gestión financiera",
   ],
   trajectory:
-    "En varios casos ocupé el rol de Director Financiero junto a mis clientes. Trabajé años en el Consejo Profesional de Ciencias Económicas de CABA, donde lideré equipos de más de 80 personas. Docente, co-autor de textos universitarios y expositor en capacitación profesional.",
+    "En varios casos ocupé el rol de Director Financiero junto a mis clientes. Trabajé años en el Consejo Profesional de Ciencias Económicas de CABA, donde lideré equipos de más de 80 personas. Docente, coautor de textos universitarios y expositor en capacitación profesional.",
 } as const;
 
 export const newsletter = {
@@ -126,6 +126,8 @@ export const newsletter = {
   description:
     "Sin tecnicismos. Sin vueltas. Para dueños que quieren entender mejor sus números y el contexto en el que operan.",
   youtubeTitle: "Con qué estás comprometido y de qué te vas a hacer cargo.",
+  youtubeId: "Nf2calxXrms",
+  youtubeEmbedUrl: "https://www.youtube.com/embed/Nf2calxXrms",
   quote:
     "Cuanto menos te necesita tu empresa, más vale. Cuanto más prescindible te hiciste, más alto es tu precio.",
   messages: [
