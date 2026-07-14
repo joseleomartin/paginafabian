@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Newsreader, Sora } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { siteConfig } from "@/lib/content";
 import "./globals.css";
 
@@ -100,6 +101,7 @@ export default function RootLayout({
         <Header />
         <main className="site-main">{children}</main>
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );
