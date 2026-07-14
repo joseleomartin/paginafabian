@@ -32,7 +32,7 @@ export default function NewsletterPage() {
             <p>{newsletter.description}</p>
             <p>
               Cada edición abre una conversación que los dueños suelen
-              postergar: valuación, caja, eficiencia, competitividad y las
+              postergar: valuación, flujo de caja, eficiencia, competitividad y las
               decisiones que definen el valor de una empresa.
             </p>
             <div className="btn-group">
