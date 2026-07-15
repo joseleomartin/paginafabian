@@ -37,10 +37,9 @@ function toForm(item: Novedad): FormState {
 
 type Props = {
   passwordConfigured: boolean;
-  storageHint: string;
 };
 
-export function AdminPanel({ passwordConfigured, storageHint }: Props) {
+export function AdminPanel({ passwordConfigured }: Props) {
   const [authed, setAuthed] = useState(false);
   const [checking, setChecking] = useState(true);
   const [password, setPassword] = useState("");
@@ -183,7 +182,6 @@ export function AdminPanel({ passwordConfigured, storageHint }: Props) {
           Configurá la variable de entorno <code>ADMIN_PASSWORD</code> y
           reiniciá el servidor para habilitar el acceso.
         </p>
-        <p className="form-note">{storageHint}</p>
       </div>
     );
   }
@@ -230,7 +228,6 @@ export function AdminPanel({ passwordConfigured, storageHint }: Props) {
           <div>
             <p className="eyebrow">Admin</p>
             <h1>Novedades</h1>
-            <p className="form-note">{storageHint}</p>
           </div>
           <button type="button" className="btn btn-secondary" onClick={handleLogout}>
             Salir
