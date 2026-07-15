@@ -48,6 +48,7 @@ export function AdminPanel({ passwordConfigured }: Props) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | NovedadType>("all");
   const [error, setError] = useState("");
+  const [loginError, setLoginError] = useState("");
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -55,6 +56,8 @@ export function AdminPanel({ passwordConfigured }: Props) {
     const res = await fetch("/api/novedades?all=1", { cache: "no-store" });
     if (res.status === 401) {
       setAuthed(false);
+      setError("");
+      setMessage("");
       return;
     }
     if (!res.ok) {
@@ -65,18 +68,22 @@ export function AdminPanel({ passwordConfigured }: Props) {
     const data = await res.json();
     setItems(data.items || []);
     setAuthed(true);
+    setError("");
   }
 
   useEffect(() => {
     loadItems()
-      .catch(() => setAuthed(false))
+      .catch(() => {
+        setAuthed(false);
+        setError("");
+      })
       .finally(() => setChecking(false));
   }, []);
 
   async function handleLogin(e: FormEvent) {
     e.preventDefault();
     setBusy(true);
-    setError("");
+    setLoginError("");
     try {
       const res = await fetch("/api/admin/login", {
         method: "POST",
@@ -85,7 +92,7 @@ export function AdminPanel({ passwordConfigured }: Props) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error || "No se pudo iniciar sesión.");
+        setLoginError(data.error || "No se pudo iniciar sesión.");
         return;
       }
       setPassword("");
@@ -99,6 +106,10 @@ export function AdminPanel({ passwordConfigured }: Props) {
     await fetch("/api/admin/logout", { method: "POST" });
     setAuthed(false);
     setItems([]);
+    setError("");
+    setMessage("");
+    setLoginError("");
+    resetForm();
   }
 
   function startEdit(item: Novedad) {
@@ -212,7 +223,7 @@ export function AdminPanel({ passwordConfigured }: Props) {
               required
             />
           </div>
-          {error ? <p className="admin-error">{error}</p> : null}
+          {loginError ? <p className="admin-error">{loginError}</p> : null}
           <button type="submit" className="btn btn-primary" disabled={busy}>
             Entrar
           </button>
