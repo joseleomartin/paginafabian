@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { NovedadesList } from "@/components/NovedadesList";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { podcast, siteConfig } from "@/lib/content";
 import { images } from "@/lib/images";
+import { getPublishedNovedades } from "@/lib/novedades";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Off the Record",
@@ -17,7 +21,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PodcastPage() {
+export default async function PodcastPage() {
+  const novedades = await getPublishedNovedades("podcast");
+
   return (
     <>
       <PageHero
@@ -54,7 +60,13 @@ export default function PodcastPage() {
         </div>
       </section>
 
-      <section className="section section-warm">
+      <NovedadesList
+        items={novedades}
+        eyebrow="Novedades"
+        title="Últimos episodios"
+      />
+
+      <section className="section">
         <div className="container">
           <Reveal>
             <div className="video-embed">

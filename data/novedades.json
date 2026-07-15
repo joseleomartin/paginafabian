@@ -1,0 +1,21 @@
+[
+  {
+    "id": "nl-ejemplo-1",
+    "type": "newsletter",
+    "title": "Cuanto menos te necesita tu empresa, más vale",
+    "summary": "Una mirada a valuación, rentas futuras y el costo de una salida desordenada.",
+    "date": "2026-03-10",
+    "href": "https://www.linkedin.com/newsletters/en-clave-pyme-7462332384512782336/",
+    "published": true
+  },
+  {
+    "id": "pod-ejemplo-1",
+    "type": "podcast",
+    "title": "Off the Record — conversaciones más allá del discurso oficial",
+    "summary": "Negocios, decisiones y lo que pasa detrás de los números. Sin guion rígido.",
+    "date": "2026-03-01",
+    "href": "https://www.youtube.com/playlist?list=PLLrqHplVIBeEYR6AQCZHr1T6at5zPgMeT",
+    "youtubeId": "",
+    "published": true
+  }
+]

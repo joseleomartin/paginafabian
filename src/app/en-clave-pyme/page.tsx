@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { NovedadesList } from "@/components/NovedadesList";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { newsletter, siteConfig } from "@/lib/content";
 import { images } from "@/lib/images";
+import { getPublishedNovedades } from "@/lib/novedades";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "En Clave PyME",
@@ -13,7 +17,9 @@ export const metadata: Metadata = {
   alternates: { canonical: `${siteConfig.url}/en-clave-pyme` },
 };
 
-export default function NewsletterPage() {
+export default async function NewsletterPage() {
+  const novedades = await getPublishedNovedades("newsletter");
+
   return (
     <>
       <PageHero
@@ -74,6 +80,12 @@ export default function NewsletterPage() {
           </Reveal>
         </div>
       </section>
+
+      <NovedadesList
+        items={novedades}
+        eyebrow="Novedades"
+        title="Últimas ediciones"
+      />
 
       <section className="section-ink quote-band">
         <div className="container">
