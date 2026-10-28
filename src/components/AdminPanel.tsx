@@ -31,7 +31,7 @@ type TabDefinition = {
 const TABS: readonly TabDefinition[] = [
   { id: "resumen", label: "Resumen", Icon: IconOverview },
   { id: "noticias", label: "Novedades", Icon: IconNews },
-  { id: "contenido", label: "Newsletter y podcast", Icon: IconBroadcast },
+  { id: "contenido", label: "Contenido", Icon: IconBroadcast },
 ];
 
 const SECTION_COPY: Record<Tab, { title: string; lead: string }> = {
@@ -44,7 +44,7 @@ const SECTION_COPY: Record<Tab, { title: string; lead: string }> = {
     lead: "Cargá charlas, eventos y anuncios, con su imagen.",
   },
   contenido: {
-    title: "Newsletter y podcast",
+    title: "Newsletter, podcast y tips",
     lead: "Se sincronizan solos desde LinkedIn y YouTube; acá podés corregirlos o sumar uno a mano.",
   },
 };

@@ -39,6 +39,7 @@ export function Footer() {
             <div className="footer-links">
               <Link href="/en-clave-pyme">En Clave PyME</Link>
               <Link href="/off-the-record">Off the Record</Link>
+              <Link href="/tips">Tips PyMEs</Link>
               <a
                 href={siteConfig.social.newsletter}
                 target="_blank"

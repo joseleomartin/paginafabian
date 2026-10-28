@@ -35,7 +35,7 @@ npm run build
 El panel vive en `/admin` (sin link en el menú, no se indexa) y tiene dos pestañas:
 
 - **Novedades**: noticias propias del sitio (charlas, eventos, anuncios) con imagen opcional. Se muestran en `/novedades`.
-- **Newsletter y podcast**: correcciones manuales de lo que se sincroniza solo (ver más abajo).
+- **Newsletter, podcast y tips**: correcciones manuales de lo que se sincroniza solo (ver más abajo).
 
 ### Novedades (con imagen)
 
@@ -45,24 +45,25 @@ El panel vive en `/admin` (sin link en el menú, no se indexa) y tiene dos pesta
 - Almacenamiento: en local, `data/noticias.json` + `public/uploads/images/`; en Vercel, Vercel Blob (requiere `BLOB_READ_WRITE_TOKEN`; sin él el panel avisa que no puede guardar).
 - Si querés conservar en el repo las novedades cargadas en local, hacé commit de `data/noticias.json` **y** de `public/uploads/`.
 
-### Newsletter y podcast
+### Newsletter, podcast y tips
 
-Publicá o corregí newsletter y podcast en `/admin`. Cada contenido acepta una imagen propia (mismas reglas que Novedades): reemplaza a la portada de LinkedIn o a la miniatura de YouTube. Editar un contenido conserva su imagen y badge. Al reemplazar o eliminar solo se borran imágenes subidas desde el admin, nunca las covers del repo (`public/images/newsletter/`) ni las de fuentes externas.
+Publicá o corregí newsletter, podcast y tips en `/admin`. Cada contenido acepta una imagen propia (mismas reglas que Novedades): reemplaza a la portada de LinkedIn o a la miniatura de YouTube. Editar un contenido conserva su imagen y badge. Al reemplazar o eliminar solo se borran imágenes subidas desde el admin, nunca las covers del repo (`public/images/newsletter/`) ni las de fuentes externas.
 
 1. Copiá `.env.example` a `.env.local` y definí `ADMIN_PASSWORD`.
 2. En local: `npm run dev` → los cambios se guardan en `data/novedades.json`.
 3. En Vercel: además de `ADMIN_PASSWORD`, creá un Blob store y seteá `BLOB_READ_WRITE_TOKEN` para que los cambios perduren en producción.
 
-Las novedades publicadas aparecen en el home (carruseles), `/en-clave-pyme` y `/off-the-record`.
+Las novedades publicadas aparecen en el home (carruseles), `/en-clave-pyme`, `/off-the-record` y `/tips`.
 
 ## Actualización automática de contenido
 
 | Fuente | Cómo se obtiene |
 | --- | --- |
-| Podcast (YouTube) | Feed Atom oficial de la playlist (`siteConfig`/`podcast.playlistId`) |
+| Podcast (YouTube) | Feed Atom oficial de la playlist (`podcast.playlistId`) |
+| Tips PyMEs (YouTube) | Feed Atom de la playlist (`tips.playlistId`). El feed solo trae los 15 más nuevos: los anteriores viven en el archivo `data/novedades.json` |
 | Newsletter (LinkedIn) | Feed RSS de terceros (`linkedinrss.cns.me`), solo trae las ~5 últimas |
 
-- Al visitar `/`, `/en-clave-pyme` o `/off-the-record` se hace un sync "best effort": máximo cada 10 min por instancia y **nunca rompe la página** si la fuente o el storage fallan.
+- Al visitar `/`, `/en-clave-pyme`, `/off-the-record` o `/tips` se hace un sync "best effort": máximo cada 10 min por instancia y **nunca rompe la página** si la fuente o el storage fallan.
 - Cron diario en `vercel.json` → `/api/novedades/sync` (requiere `CRON_SECRET`; Vercel envía el Bearer solo).
 - El sync **solo agrega lo nuevo y completa datos faltantes**: nunca pisa fecha, título, link ni imagen ya guardados (`src/lib/novedades-merge.ts`, con tests).
 - En Vercel hace falta `BLOB_READ_WRITE_TOKEN`; sin él el filesystem es de solo lectura y los cambios no persisten.

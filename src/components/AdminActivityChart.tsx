@@ -9,6 +9,7 @@ const SOURCES: ReadonlyArray<{ id: MetricSource; label: string }> = [
   { id: "noticia", label: "Novedades" },
   { id: "newsletter", label: "Newsletter" },
   { id: "podcast", label: "Podcast" },
+  { id: "tip", label: "Tips" },
 ];
 
 /** La barra más alta ocupa este porcentaje del área, para dejar lugar al número. */

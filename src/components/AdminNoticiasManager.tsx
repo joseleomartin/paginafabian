@@ -2,6 +2,12 @@
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AdminImageField, useImageField } from "@/components/AdminImageField";
+import {
+  AdminListFooter,
+  AdminListToolbar,
+} from "@/components/AdminListToolbar";
+import { useAdminListView } from "@/components/useAdminListView";
+import type { ListAccessors } from "@/lib/admin-list";
 import { formatDate } from "@/lib/format-date";
 import {
   NOTICIA_BODY_MAX,
@@ -50,6 +56,11 @@ function toFormData(
   if (image) data.set("image", image);
   return data;
 }
+
+const listAccessors: ListAccessors<Noticia> = {
+  searchText: (item) => `${item.title} ${item.body} ${item.date}`,
+  isPublished: (item) => item.published,
+};
 
 const EXCERPT_LENGTH = 180;
 
@@ -191,6 +202,8 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
     }
   }
 
+  const view = useAdminListView(items, { accessors: listAccessors });
+
   return (
     <div className="admin-grid">
       <section className="admin-card">
@@ -308,58 +321,80 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
             la primera.
           </p>
         ) : (
-          <ul className="admin-list">
-            {items.map((item) => (
-              <li key={item.id}>
-                <div
-                  className={
-                    item.imageUrl
-                      ? "admin-list-item-media admin-list-item-media--with-thumb"
-                      : "admin-list-item-media"
-                  }
-                >
-                  {item.imageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img className="admin-thumb" src={item.imageUrl} alt="" />
-                  ) : null}
-                  <div>
-                    <p className="eyebrow">
-                      {formatDate(item.date)}
-                      {item.published ? "" : " · borrador"}
-                    </p>
-                    <h3>{item.title}</h3>
-                    <p>{excerpt(item.body)}</p>
-                  </div>
-                </div>
-                <div className="btn-group">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => startEdit(item)}
-                    disabled={busy}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => handleTogglePublished(item)}
-                    disabled={busy}
-                  >
-                    {item.published ? "Ocultar" : "Publicar"}
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-ghost-dark"
-                    onClick={() => handleDelete(item)}
-                    disabled={busy}
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <>
+            <AdminListToolbar
+              view={view}
+              searchId="noticias-search"
+              searchLabel="Buscar por título, texto o fecha"
+            />
+
+            {view.matchCount === 0 ? (
+              <p className="form-note">
+                Ninguna novedad coincide con la búsqueda o el filtro.
+              </p>
+            ) : (
+              <ul className="admin-list">
+                {view.shown.map((item) => (
+                  <li key={item.id} className={item.published ? undefined : "is-hidden"}>
+                    <div className="admin-row">
+                      {item.imageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          className="admin-thumb"
+                          src={item.imageUrl}
+                          alt=""
+                          loading="lazy"
+                        />
+                      ) : null}
+                      <div className="admin-row-body">
+                        <p className="admin-row-meta">
+                          <span className="eyebrow">{formatDate(item.date)}</span>
+                          {item.published ? null : (
+                            <span className="admin-badge">Oculta</span>
+                          )}
+                        </p>
+                        <h3>{item.title}</h3>
+                        <p className="admin-row-text">{excerpt(item.body)}</p>
+                      </div>
+                    </div>
+                    <div className="admin-row-actions">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        onClick={() => startEdit(item)}
+                        disabled={busy}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        onClick={() => handleTogglePublished(item)}
+                        disabled={busy}
+                      >
+                        {item.published ? "Ocultar" : "Mostrar"}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-ghost-dark"
+                        onClick={() => handleDelete(item)}
+                        disabled={busy}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <AdminListFooter
+              shownCount={view.shown.length}
+              matchCount={view.matchCount}
+              remaining={view.remaining}
+              onShowMore={view.showMore}
+            />
+          </>
         )}
       </section>
     </div>

@@ -4,7 +4,7 @@
  * Todas las fechas son strings YYYY-MM-DD; el "hoy" lo decide quien llama.
  */
 
-export type MetricSource = "noticia" | "newsletter" | "podcast";
+export type MetricSource = "noticia" | "newsletter" | "podcast" | "tip";
 
 export type MetricNoticia = {
   id: string;
@@ -15,7 +15,7 @@ export type MetricNoticia = {
 
 export type MetricNovedad = {
   id: string;
-  type: "newsletter" | "podcast";
+  type: "newsletter" | "podcast" | "tip";
   title: string;
   date: string;
   href: string;
@@ -30,6 +30,7 @@ export type ActivityMonth = {
   noticia: number;
   newsletter: number;
   podcast: number;
+  tip: number;
   total: number;
 };
 
@@ -51,6 +52,7 @@ export type AdminMetrics = {
     cadenceDays: number | null;
   };
   podcast: { published: number; latestDate: string | null };
+  tips: { published: number; latestDate: string | null };
   lastPublication: { date: string; source: MetricSource; daysAgo: number } | null;
   activity: ActivityMonth[];
   recent: RecentItem[];
@@ -176,6 +178,7 @@ function buildMonthWindow(today: string, months: number): ActivityMonth[] {
       noticia: 0,
       newsletter: 0,
       podcast: 0,
+      tip: 0,
       total: 0,
     });
   }
@@ -243,6 +246,12 @@ export function buildAdminMetrics(input: BuildMetricsInput): AdminMetrics {
         (item) => item.published && item.type === "podcast"
       ).length,
       latestDate: latestDateOf(published, "podcast"),
+    },
+    tips: {
+      published: input.novedades.filter(
+        (item) => item.published && item.type === "tip"
+      ).length,
+      latestDate: latestDateOf(published, "tip"),
     },
     lastPublication: last
       ? {

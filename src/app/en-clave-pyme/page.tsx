@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HeroMedia } from "@/components/hero/HeroMedia";
+import { FeatureSplit } from "@/components/FeatureSplit";
 import { NovedadesList } from "@/components/NovedadesList";
-import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { newsletter, siteConfig } from "@/lib/content";
-import { images } from "@/lib/images";
 import { getPublishedNovedades } from "@/lib/novedades";
 import { refreshNovedades } from "@/lib/sync-novedades";
 
@@ -26,55 +25,42 @@ export default async function NewsletterPage() {
 
   return (
     <>
-      <PageHero
+      <FeatureSplit
         eyebrow="Newsletter"
         title={newsletter.name}
         accent="PyME"
         lead={newsletter.tagline}
-        actions={
-          <>
+        mediaShape="wide"
+        media={
+          <YouTubeEmbed
+            src={newsletter.youtubeEmbedUrl}
+            title={newsletter.youtubeTitle}
+            shape="wide"
+          />
+        }
+      >
+        <p>{newsletter.description}</p>
+        <div className="btn-group">
+          <a
+            href={siteConfig.social.newsletter}
+            className="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Suscribirme en LinkedIn
+          </a>
+          {latest ? (
             <a
-              href={siteConfig.social.newsletter}
-              className="btn btn-primary"
+              href={latest.href}
+              className="btn btn-secondary"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Suscribirme en LinkedIn
+              Leer última edición
             </a>
-            {latest ? (
-              <a
-                href={latest.href}
-                className="btn btn-secondary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Leer última edición
-              </a>
-            ) : null}
-          </>
-        }
-      >
-        <HeroMedia image={images.stageGesture} />
-      </PageHero>
-
-      <section className="section-tight">
-        <div className="container newsletter-intro">
-          <Reveal>
-            <p className="lead">{newsletter.description}</p>
-            <div className="video-embed">
-              <iframe
-                src={newsletter.youtubeEmbedUrl}
-                title={newsletter.youtubeTitle}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-          </Reveal>
+          ) : null}
         </div>
-      </section>
-
+      </FeatureSplit>
       <NovedadesList
         items={items}
         eyebrow="Novedades"

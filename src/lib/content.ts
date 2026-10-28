@@ -54,6 +54,7 @@ export const navLinks = [
   { href: "/servicios", label: "Cómo trabajo" },
   { href: "/en-clave-pyme", label: "Newsletter" },
   { href: "/off-the-record", label: "Podcast" },
+  { href: "/tips", label: "Tips PyMEs" },
   { href: "/novedades", label: "Novedades" },
   { href: "/contacto", label: "Contacto" },
 ] as const;
@@ -176,4 +177,14 @@ export const podcast = {
   playlistUrl: "https://www.youtube.com/playlist?list=PLbi8-tfecR-s",
   embedUrl:
     "https://www.youtube.com/embed/videoseries?list=PLbi8-tfecR-s",
+} as const;
+
+/** Playlist de YouTube "Tips y Herramientas para PyME's y Emprendedores" (Shorts). */
+export const tips = {
+  name: "Tips PyMEs",
+  tagline: "Tips y herramientas para PyMEs y emprendedores.",
+  description:
+    "Videos cortos con una idea clara por vez: finanzas, precios, margen, financiamiento y decisiones para el dueño de una PyME.",
+  playlistId: "PLaxuFJgBymPQ",
+  playlistUrl: "https://www.youtube.com/playlist?list=PLaxuFJgBymPQ",
 } as const;

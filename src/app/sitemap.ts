@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/servicios",
     "/en-clave-pyme",
     "/off-the-record",
+    "/tips",
     "/novedades",
     "/contacto",
   ];

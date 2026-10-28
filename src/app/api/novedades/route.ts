@@ -5,6 +5,7 @@ import {
   createId,
   getNovedades,
   getPublishedNovedades,
+  isNovedadType,
   saveNovedades,
   type Novedad,
   type NovedadType,
@@ -15,7 +16,7 @@ import { deleteImage, saveImage } from "@/lib/uploads";
 export const dynamic = "force-dynamic";
 
 function asKnownType(value: string | null): NovedadType | undefined {
-  return value === "newsletter" || value === "podcast" ? value : undefined;
+  return isNovedadType(value) ? value : undefined;
 }
 
 export async function GET(request: Request) {

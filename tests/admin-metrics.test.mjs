@@ -178,6 +178,37 @@ describe("buildAdminMetrics: actividad mensual", () => {
   });
 });
 
+describe("buildAdminMetrics: tips", () => {
+  it("cuenta los tips publicados y su última fecha, sin mezclarlos con el podcast", () => {
+    const metrics = build({
+      novedades: [
+        novedad("t1", "tip", "2026-10-23"),
+        novedad("t2", "tip", "2026-10-12"),
+        novedad("t3", "tip", "2026-10-30"),
+        novedad("t4", "tip", "2026-10-10", false),
+        novedad("p1", "podcast", "2026-10-01"),
+      ],
+    });
+    assert.deepEqual(metrics.tips, { published: 3, latestDate: "2026-10-23" });
+    assert.equal(metrics.podcast.published, 1);
+  });
+
+  it("los tips cuentan en la actividad mensual y en la última publicación", () => {
+    const metrics = build({
+      novedades: [
+        novedad("t1", "tip", "2026-10-23"),
+        novedad("n1", "newsletter", "2026-10-20"),
+      ],
+    });
+    assert.equal(metrics.activity.at(-1).tip, 1);
+    assert.equal(metrics.activity.at(-1).total, 2);
+    assert.equal(metrics.lastPublication.source, "tip");
+  });
+
+  it("sin tips devuelve ceros y fecha nula", () => {
+    assert.deepEqual(build().tips, { published: 0, latestDate: null });
+  });
+});
 describe("buildAdminMetrics: recientes", () => {
   it("mezcla tipos, ordena de más nuevo a más viejo y respeta el límite", () => {
     const metrics = build({

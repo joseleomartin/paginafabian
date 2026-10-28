@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HeroMedia } from "@/components/hero/HeroMedia";
+import { FeatureSplit } from "@/components/FeatureSplit";
 import { NovedadesList } from "@/components/NovedadesList";
-import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { podcast, siteConfig } from "@/lib/content";
-import { images } from "@/lib/images";
+import { formatDate } from "@/lib/format-date";
 import { getPublishedNovedades } from "@/lib/novedades";
 import { refreshNovedades } from "@/lib/sync-novedades";
 
@@ -30,115 +30,46 @@ export default async function PodcastPage() {
   const embedSrc = latest?.youtubeId
     ? `https://www.youtube.com/embed/${latest.youtubeId}`
     : podcast.embedUrl;
-  const thumbnailUrl =
-    latest?.imageUrl ||
-    (latest?.youtubeId
-      ? `https://i.ytimg.com/vi/${latest.youtubeId}/hqdefault.jpg`
-      : null);
   const embedTitle = latest
     ? `${latest.title} — ${podcast.name}`
     : `${podcast.name}, playlist de YouTube`;
 
   return (
     <>
-      <PageHero
+      <FeatureSplit
         eyebrow="Podcast"
         title={podcast.name}
         accent="Record"
         lead={podcast.tagline}
-        actions={
-          <>
-            <a
-              href={latest?.href ?? podcast.playlistUrl}
-              className="btn btn-primary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {latest ? "Ver último episodio" : "Abrir en YouTube"}
-            </a>
-            <a
-              href={podcast.playlistUrl}
-              className="btn btn-secondary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Ver playlist
-            </a>
-          </>
-        }
+        mediaShape="wide"
+        media={<YouTubeEmbed src={embedSrc} title={embedTitle} shape="wide" />}
       >
-        {latest && thumbnailUrl ? (
-          <HeroMedia
-            image={{ src: thumbnailUrl, alt: latest.title, position: "50% 50%" }}
-            variant="card"
-            aspectRatio="16 / 9"
-            href={latest.href}
-            play
-            label="Último episodio"
-            title={latest.title}
-            date={latest.date}
-          />
-        ) : (
-          <HeroMedia image={images.podcastHero} />
-        )}
-      </PageHero>
-
-      <section className="section">
-        <div className="container narrow-copy">
-          <Reveal>
-            <p>{podcast.description}</p>
-            <p>
-              Si En Clave PyME es la lectura semanal, Off the Record es la
-              conversación: matices y preguntas que suelen quedarse fuera del
-              escenario.
-            </p>
-            <div className="btn-group">
-              <a
-                href={latest?.href ?? podcast.playlistUrl}
-                className="btn btn-primary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {latest ? "Ver último episodio" : "Abrir en YouTube"}
-              </a>
-              <a
-                href={podcast.playlistUrl}
-                className="btn btn-secondary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Ver playlist
-              </a>
-              <Link href="/en-clave-pyme" className="btn btn-secondary">
-                Ir a la newsletter
-              </Link>
-            </div>
-          </Reveal>
+        {latest ? (
+          <>
+            <p className="eyebrow">Último episodio</p>
+            <h2 className="episode-featured-title">{latest.title}</h2>
+            <p className="form-note">{formatDate(latest.date)}</p>
+          </>
+        ) : null}
+        <div className="btn-group">
+          <a
+            href={latest?.href ?? podcast.playlistUrl}
+            className="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {latest ? "Ver último episodio" : "Abrir en YouTube"}
+          </a>
+          <a
+            href={podcast.playlistUrl}
+            className="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver playlist
+          </a>
         </div>
-      </section>
-
-      <section className="section section-tight">
-        <div className="container">
-          <Reveal>
-            {latest ? (
-              <div className="episode-featured-head">
-                <p className="eyebrow">Último episodio</p>
-                <h2 className="episode-featured-title">{latest.title}</h2>
-              </div>
-            ) : null}
-            <div className="video-embed">
-              <iframe
-                src={embedSrc}
-                title={embedTitle}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      </FeatureSplit>
 
       <NovedadesList
         items={episodios}

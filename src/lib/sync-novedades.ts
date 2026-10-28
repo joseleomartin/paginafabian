@@ -1,4 +1,4 @@
-import { podcast } from "@/lib/content";
+import { podcast, tips } from "@/lib/content";
 import { getNewsletterEditions } from "@/lib/linkedin-newsletter";
 import { archivedNovedades } from "@/lib/novedades-archive";
 import {
@@ -11,15 +11,21 @@ import {
   saveNovedades,
   type Novedad,
 } from "@/lib/novedades";
+import {
+  videoToNovedad,
+  type VideoNovedadType,
+  type VideoSource,
+} from "@/lib/video-novedad";
 import { getPlaylistVideos } from "@/lib/youtube-playlist";
 
 export type SyncResult = {
   newsletterAdded: number;
   podcastAdded: number;
+  tipsAdded: number;
   total: number;
 };
 
-export type SyncScope = "newsletter" | "podcast";
+export type SyncScope = "newsletter" | "podcast" | "tips";
 
 /** Mínimo entre sincronizaciones automáticas por instancia (evita golpear las fuentes en cada visita). */
 const MIN_SYNC_INTERVAL_MS = 10 * 60 * 1000;
@@ -45,26 +51,25 @@ function editionToNovedad(edition: {
   };
 }
 
-function videoToNovedad(video: {
-  id: string;
-  title: string;
-  url: string;
-  published: string;
-}): Novedad {
-  return {
-    id: `yt-${video.id}`,
-    type: "podcast",
-    title: video.title,
-    summary: podcast.tagline,
-    date: video.published.slice(0, 10),
-    href: video.url,
-    youtubeId: video.id,
-    imageUrl: `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`,
-    badge: "Off the Record",
-    published: true,
-  };
-}
+type VideoSyncSource = VideoSource & { playlistId: string };
 
+/** Playlists de YouTube que se sincronizan, por tipo de novedad. */
+const VIDEO_SOURCES: Record<VideoNovedadType, VideoSyncSource> = {
+  podcast: {
+    type: "podcast",
+    playlistId: podcast.playlistId,
+    badge: "Off the Record",
+    summary: podcast.tagline,
+    thumbnail: "hqdefault",
+  },
+  tip: {
+    type: "tip",
+    playlistId: tips.playlistId,
+    badge: tips.name,
+    summary: tips.tagline,
+    thumbnail: "maxresdefault",
+  },
+};
 /**
  * Serializa todas las escrituras: sync de newsletter y podcast leen→mergean→guardan
  * sobre el mismo store y, en paralelo, una pisaría a la otra.
@@ -113,13 +118,22 @@ async function mergeNewsletterSources(
   );
 }
 
-/** Completa el store con el archivo histórico y suma los episodios más recientes. */
-async function mergePodcastSources(existing: Novedad[]): Promise<MergeResult> {
-  const seeded = mergeNew(existing, archivedNovedades("podcast"));
-  const videos = await getPlaylistVideos(podcast.playlistId, 25);
-  return chainMerges(seeded, mergeNew(seeded.items, videos.map(videoToNovedad)));
+/** Completa el store con el archivo histórico y suma los videos más recientes de la playlist. */
+async function mergeVideoSources(
+  existing: Novedad[],
+  type: VideoNovedadType
+): Promise<MergeResult> {
+  const source = VIDEO_SOURCES[type];
+  const seeded = mergeNew(existing, archivedNovedades(type));
+  const videos = await getPlaylistVideos(source.playlistId, 25);
+  return chainMerges(
+    seeded,
+    mergeNew(
+      seeded.items,
+      videos.map((video) => videoToNovedad(video, source))
+    )
+  );
 }
-
 /** Trae ediciones de LinkedIn y guarda solo lo nuevo. */
 export function syncNewsletterNovedades(): Promise<number> {
   return runExclusive(async () =>
@@ -130,7 +144,14 @@ export function syncNewsletterNovedades(): Promise<number> {
 /** Trae episodios de YouTube y guarda solo lo nuevo. */
 export function syncPodcastNovedades(): Promise<number> {
   return runExclusive(async () =>
-    persistIfChanged(await mergePodcastSources(await getNovedades()))
+    persistIfChanged(await mergeVideoSources(await getNovedades(), "podcast"))
+  );
+}
+
+/** Trae los tips (Shorts) de la playlist de YouTube y guarda solo lo nuevo. */
+export function syncTipsNovedades(): Promise<number> {
+  return runExclusive(async () =>
+    persistIfChanged(await mergeVideoSources(await getNovedades(), "tip"))
   );
 }
 
@@ -138,16 +159,18 @@ export function syncPodcastNovedades(): Promise<number> {
 export function syncAllNovedades(): Promise<SyncResult> {
   return runExclusive(async () => {
     const afterNewsletter = await mergeNewsletterSources(await getNovedades());
-    const afterPodcast = await mergePodcastSources(afterNewsletter.items);
+    const afterPodcast = await mergeVideoSources(afterNewsletter.items, "podcast");
+    const afterTips = await mergeVideoSources(afterPodcast.items, "tip");
 
-    if (afterNewsletter.changed || afterPodcast.changed) {
-      await saveNovedades(afterPodcast.items);
+    if (afterNewsletter.changed || afterPodcast.changed || afterTips.changed) {
+      await saveNovedades(afterTips.items);
     }
 
     return {
       newsletterAdded: afterNewsletter.added,
       podcastAdded: afterPodcast.added,
-      total: afterPodcast.items.length,
+      tipsAdded: afterTips.added,
+      total: afterTips.items.length,
     };
   });
 }
@@ -155,11 +178,13 @@ export function syncAllNovedades(): Promise<SyncResult> {
 const lastAttemptAt: Record<SyncScope, number> = {
   newsletter: 0,
   podcast: 0,
+  tips: 0,
 };
 
 const syncers: Record<SyncScope, () => Promise<number>> = {
   newsletter: syncNewsletterNovedades,
   podcast: syncPodcastNovedades,
+  tips: syncTipsNovedades,
 };
 
 /**

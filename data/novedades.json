@@ -11,6 +11,30 @@
     "published": true
   },
   {
+    "id": "yt-FexO2-vDdms",
+    "type": "tip",
+    "title": "No me la contaron. Lo vivo todos los días.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-10-23",
+    "href": "https://www.youtube.com/shorts/FexO2-vDdms",
+    "youtubeId": "FexO2-vDdms",
+    "imageUrl": "https://i.ytimg.com/vi/FexO2-vDdms/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-oLVvtBEUthQ",
+    "type": "tip",
+    "title": "El Crecimiento no debería castigarse. #cfofractional",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-10-22",
+    "href": "https://www.youtube.com/shorts/oLVvtBEUthQ",
+    "youtubeId": "oLVvtBEUthQ",
+    "imageUrl": "https://i.ytimg.com/vi/oLVvtBEUthQ/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
     "id": "li-29-quién-se-robó-mi-capital-de-trabajo-fabián-canoni-frxyf",
     "type": "newsletter",
     "title": "#29. ¿Quién se robó mi capital de trabajo?",
@@ -30,6 +54,90 @@
     "href": "https://es.linkedin.com/pulse/28-term%C3%B3metro-pyme-fabi%C3%A1n-canoni-7xvwf",
     "imageUrl": "https://linkedinrss.cns.me/img/aHR0cHM6Ly9tZWRpYS5saWNkbi5jb20vZG1zL2ltYWdlL3YyL0Q0RDEyQVFGUmM5MmdObi1zbFEvYXJ0aWNsZS1jb3Zlcl9pbWFnZS1zaHJpbmtfNzIwXzEyODAvQjREYUZFLkdtQkg4QVUtLzAvMTc5MjE1ODQ5MzUzNj9lPTIxNDc0ODM2NDcmdj1iZXRhJnQ9bDZBM3Y1bnpqaVdBMzY4c3llZk4yamsxU0VLaF81Z2FWdDY0WGlLZGZPRQ",
     "badge": "En Clave PyME",
+    "published": true
+  },
+  {
+    "id": "yt-aYNkmcHYDmo",
+    "type": "tip",
+    "title": "Punto de Equlibrio  #cfofractional",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-10-14",
+    "href": "https://www.youtube.com/shorts/aYNkmcHYDmo",
+    "youtubeId": "aYNkmcHYDmo",
+    "imageUrl": "https://i.ytimg.com/vi/aYNkmcHYDmo/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-XFmzKNQ_ROE",
+    "type": "tip",
+    "title": "El Síndrome del Dueño Cajero #cfofractional",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-10-12",
+    "href": "https://www.youtube.com/shorts/XFmzKNQ_ROE",
+    "youtubeId": "XFmzKNQ_ROE",
+    "imageUrl": "https://i.ytimg.com/vi/XFmzKNQ_ROE/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-pb-Pog6fV_0",
+    "type": "tip",
+    "title": "Fijar Precios con el Costo de Ayer #cfofractional",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-10-12",
+    "href": "https://www.youtube.com/shorts/pb-Pog6fV_0",
+    "youtubeId": "pb-Pog6fV_0",
+    "imageUrl": "https://i.ytimg.com/vi/pb-Pog6fV_0/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-TfDzgQ1CDao",
+    "type": "tip",
+    "title": "Margen vs  Mark Up #cfofractional",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-10-12",
+    "href": "https://www.youtube.com/shorts/TfDzgQ1CDao",
+    "youtubeId": "TfDzgQ1CDao",
+    "imageUrl": "https://i.ytimg.com/vi/TfDzgQ1CDao/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-Yce3LimQ454",
+    "type": "tip",
+    "title": "Proyectos de Inversión   Parte 1 #cfofractional",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-10-12",
+    "href": "https://www.youtube.com/shorts/Yce3LimQ454",
+    "youtubeId": "Yce3LimQ454",
+    "imageUrl": "https://i.ytimg.com/vi/Yce3LimQ454/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-UbMwm4QqUr0",
+    "type": "tip",
+    "title": "Proyectos de Inversión   Parte 2 #cfofractional",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-10-12",
+    "href": "https://www.youtube.com/shorts/UbMwm4QqUr0",
+    "youtubeId": "UbMwm4QqUr0",
+    "imageUrl": "https://i.ytimg.com/vi/UbMwm4QqUr0/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-aMlnIORFO3k",
+    "type": "tip",
+    "title": "Proyectos de Inversión   Parte 3 #cfofractional",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-10-12",
+    "href": "https://www.youtube.com/shorts/aMlnIORFO3k",
+    "youtubeId": "aMlnIORFO3k",
+    "imageUrl": "https://i.ytimg.com/vi/aMlnIORFO3k/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
     "published": true
   },
   {
@@ -88,6 +196,30 @@
     "published": true
   },
   {
+    "id": "yt-xOFBa-N01eE",
+    "type": "tip",
+    "title": "¿Cómo estás planificando tu retiro?",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-09-23",
+    "href": "https://www.youtube.com/shorts/xOFBa-N01eE",
+    "youtubeId": "xOFBa-N01eE",
+    "imageUrl": "https://i.ytimg.com/vi/xOFBa-N01eE/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-gWimUBPZgTc",
+    "type": "tip",
+    "title": "El Síndrome del Dueño-Cajero",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-09-23",
+    "href": "https://www.youtube.com/shorts/gWimUBPZgTc",
+    "youtubeId": "gWimUBPZgTc",
+    "imageUrl": "https://i.ytimg.com/vi/gWimUBPZgTc/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
     "id": "li-22-pidas-plata-armá-una-estructura-de-financiamiento-fabián-canoni-femnf",
     "type": "newsletter",
     "title": "#22. No pidas plata. Armá una estructura de financiamiento.",
@@ -118,6 +250,42 @@
     "href": "https://www.linkedin.com/pulse/20-antes-de-invertir-en-un-proyecto-las-cinco-preguntas-fabi%C3%A1n-canoni-9tkef",
     "imageUrl": "/images/newsletter/ed-20.png",
     "badge": "En Clave PyME",
+    "published": true
+  },
+  {
+    "id": "yt-wdnx327wRNE",
+    "type": "tip",
+    "title": "Al Financiamiento no se accede. Se califica.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-09-12",
+    "href": "https://www.youtube.com/shorts/wdnx327wRNE",
+    "youtubeId": "wdnx327wRNE",
+    "imageUrl": "https://i.ytimg.com/vi/wdnx327wRNE/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-E0XMmVZVqaM",
+    "type": "tip",
+    "title": "Leasing como instrumento financiero.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-09-12",
+    "href": "https://www.youtube.com/shorts/E0XMmVZVqaM",
+    "youtubeId": "E0XMmVZVqaM",
+    "imageUrl": "https://i.ytimg.com/vi/E0XMmVZVqaM/oar2.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-111Djdvj1Ek",
+    "type": "tip",
+    "title": "¿Proceso mata innovación?",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-09-06",
+    "href": "https://www.youtube.com/shorts/111Djdvj1Ek",
+    "youtubeId": "111Djdvj1Ek",
+    "imageUrl": "https://i.ytimg.com/vi/111Djdvj1Ek/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
     "published": true
   },
   {
@@ -184,6 +352,18 @@
     "href": "https://www.linkedin.com/pulse/14-al-financiamiento-se-accede-califica-fabi%C3%A1n-canoni-fc2pf",
     "imageUrl": "/images/newsletter/ed-14.png",
     "badge": "En Clave PyME",
+    "published": true
+  },
+  {
+    "id": "yt-j0WmoYlyAtM",
+    "type": "tip",
+    "title": "𝗔𝘃𝗮𝗹 𝗱𝗲 𝗦.𝗚.𝗥. + 𝗥𝗲𝗻𝗱𝗶𝗺𝗶𝗲𝗻𝘁𝗼𝘀 𝗙𝗶𝗻𝗮𝗻𝗰𝗶𝗲𝗿𝗼𝘀.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-08-14",
+    "href": "https://www.youtube.com/shorts/j0WmoYlyAtM",
+    "youtubeId": "j0WmoYlyAtM",
+    "imageUrl": "https://i.ytimg.com/vi/j0WmoYlyAtM/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
     "published": true
   },
   {
@@ -399,6 +579,78 @@
     "href": "https://www.linkedin.com/pulse/por-qu%C3%A9-dej%C3%A9-de-hablar-gesti%C3%B3n-financiera-fabi%C3%A1n-canoni-l76kf",
     "imageUrl": "/images/newsletter/ed-1.jpg",
     "badge": "En Clave PyME",
+    "published": true
+  },
+  {
+    "id": "yt-KCdUyr4qVQ0",
+    "type": "tip",
+    "title": "IA: Primero el Proceso.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-08-04",
+    "href": "https://www.youtube.com/shorts/KCdUyr4qVQ0",
+    "youtubeId": "KCdUyr4qVQ0",
+    "imageUrl": "https://i.ytimg.com/vi/KCdUyr4qVQ0/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-sHsmQKHtPJo",
+    "type": "tip",
+    "title": "ARCA: Gracias por nada.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-08-04",
+    "href": "https://www.youtube.com/shorts/sHsmQKHtPJo",
+    "youtubeId": "sHsmQKHtPJo",
+    "imageUrl": "https://i.ytimg.com/vi/sHsmQKHtPJo/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-Qb8oIRLacB8",
+    "type": "tip",
+    "title": "Falta Financiamiento Privado.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-07-30",
+    "href": "https://www.youtube.com/shorts/Qb8oIRLacB8",
+    "youtubeId": "Qb8oIRLacB8",
+    "imageUrl": "https://i.ytimg.com/vi/Qb8oIRLacB8/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-QZ5W33sTX74",
+    "type": "tip",
+    "title": "¿Qué son las S.G.R.?",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-07-13",
+    "href": "https://www.youtube.com/shorts/QZ5W33sTX74",
+    "youtubeId": "QZ5W33sTX74",
+    "imageUrl": "https://i.ytimg.com/vi/QZ5W33sTX74/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-LgBoK1o7w3s",
+    "type": "tip",
+    "title": "Más del 70% de los empresarios PyME´s aún no está planificando su retiro.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-07-13",
+    "href": "https://www.youtube.com/shorts/LgBoK1o7w3s",
+    "youtubeId": "LgBoK1o7w3s",
+    "imageUrl": "https://i.ytimg.com/vi/LgBoK1o7w3s/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-G3H2UYsJtQY",
+    "type": "tip",
+    "title": "Una PyME que depende 100% de su dueño...VALE MENOS!!!",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-07-08",
+    "href": "https://www.youtube.com/shorts/G3H2UYsJtQY",
+    "youtubeId": "G3H2UYsJtQY",
+    "imageUrl": "https://i.ytimg.com/vi/G3H2UYsJtQY/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
     "published": true
   }
 ]

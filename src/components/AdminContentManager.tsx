@@ -2,7 +2,25 @@
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AdminImageField, useImageField } from "@/components/AdminImageField";
+import {
+  AdminListFooter,
+  AdminListToolbar,
+} from "@/components/AdminListToolbar";
+import { useAdminListView } from "@/components/useAdminListView";
+import { hostLabel, type ListAccessors } from "@/lib/admin-list";
 import type { Novedad, NovedadType } from "@/lib/novedades";
+
+const TYPE_LABELS: Record<NovedadType, string> = {
+  newsletter: "Newsletter",
+  podcast: "Podcast",
+  tip: "Tips",
+};
+
+const listAccessors: ListAccessors<Novedad> = {
+  searchText: (item) =>
+    `${item.title} ${item.summary} ${TYPE_LABELS[item.type]} ${item.date}`,
+  isPublished: (item) => item.published,
+};
 
 type FormState = {
   type: NovedadType;
@@ -61,7 +79,7 @@ type Props = {
   onUnauthorized: () => void;
 };
 
-/** Gestión manual de newsletter y podcast (se sincronizan solos; esto sirve para corregir o agregar). */
+/** Gestión manual de newsletter, podcast y tips (se sincronizan solos; esto sirve para corregir o agregar). */
 export function AdminContentManager({ onUnauthorized }: Props) {
   const [items, setItems] = useState<Novedad[]>([]);
   const [form, setForm] = useState<FormState>(emptyForm);
@@ -163,16 +181,47 @@ export function AdminContentManager({ onUnauthorized }: Props) {
     }
   }
 
-  const visible = items.filter(
-    (item) => filter === "all" || item.type === filter
-  );
+  async function handleTogglePublished(item: Novedad) {
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const res = await fetch(`/api/novedades/${item.id}`, {
+        method: "PUT",
+        body: toFormData({ ...toForm(item), published: !item.published }, null),
+      });
+      if (res.status === 401) {
+        onUnauthorized();
+        return;
+      }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data.error || "No se pudo cambiar la visibilidad.");
+        return;
+      }
+      setMessage(
+        item.published ? "Contenido oculto del sitio." : "Contenido visible en el sitio."
+      );
+      await loadItems();
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const view = useAdminListView(items, {
+    accessors: listAccessors,
+    scope:
+      filter === "all"
+        ? undefined
+        : { key: filter, includes: (item) => item.type === filter },
+  });
 
   return (
     <div className="admin-grid">
       <section className="admin-card">
         <div className="admin-header">
           <div>
-            <p className="eyebrow">Newsletter y podcast</p>
+            <p className="eyebrow">Newsletter, podcast y tips</p>
             <h2>{editingId ? "Editar contenido" : "Agregar contenido"}</h2>
             <p className="form-note">
               Se sincronizan solos desde LinkedIn y YouTube. Usá esto solo para
@@ -197,6 +246,7 @@ export function AdminContentManager({ onUnauthorized }: Props) {
               >
                 <option value="newsletter">Newsletter</option>
                 <option value="podcast">Podcast</option>
+                <option value="tip">Tips PyMEs</option>
               </select>
             </div>
             <div className="form-field">
@@ -245,7 +295,7 @@ export function AdminContentManager({ onUnauthorized }: Props) {
             />
           </div>
 
-          {form.type === "podcast" ? (
+          {form.type !== "newsletter" ? (
             <div className="form-field">
               <label htmlFor="youtubeId">ID de YouTube (opcional)</label>
               <input
@@ -306,20 +356,24 @@ export function AdminContentManager({ onUnauthorized }: Props) {
       <section className="admin-card">
         <div className="admin-header">
           <h2>Listado</h2>
-          <div className="admin-filters">
+          <div className="admin-segment" role="group" aria-label="Tipo de contenido">
             {(
               [
-                ["all", "Todos"],
+                ["all", "Todo"],
                 ["newsletter", "Newsletter"],
                 ["podcast", "Podcast"],
+                ["tip", "Tips"],
               ] as const
             ).map(([value, label]) => (
               <button
                 key={value}
                 type="button"
                 className={
-                  filter === value ? "btn btn-primary" : "btn btn-secondary"
+                  filter === value
+                    ? "admin-segment-btn is-active"
+                    : "admin-segment-btn"
                 }
+                aria-pressed={filter === value}
                 onClick={() => setFilter(value)}
               >
                 {label}
@@ -328,61 +382,80 @@ export function AdminContentManager({ onUnauthorized }: Props) {
           </div>
         </div>
 
-        {visible.length === 0 ? (
-          <p className="form-note">Todavía no hay contenidos en este filtro.</p>
+        <AdminListToolbar
+          view={view}
+          searchId="content-search"
+          searchLabel="Buscar por título, texto o fecha"
+        />
+
+        {view.matchCount === 0 ? (
+          <p className="form-note">
+            {items.length === 0
+              ? "Todavía no hay contenidos."
+              : "Ningún contenido coincide con la búsqueda o el filtro."}
+          </p>
         ) : (
           <ul className="admin-list">
-            {visible.map((item) => (
-              <li key={item.id}>
-                <div
-                  className={
-                    displayedImageUrl(item)
-                      ? "admin-list-item-media admin-list-item-media--with-thumb"
-                      : "admin-list-item-media"
-                  }
-                >
-                  {displayedImageUrl(item) ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      className="admin-thumb"
-                      src={displayedImageUrl(item)}
-                      alt=""
-                      loading="lazy"
-                    />
-                  ) : null}
-                  <div>
-                    <p className="eyebrow">
-                      {item.type === "newsletter" ? "Newsletter" : "Podcast"}
-                      {item.published ? "" : " · borrador"}
-                    </p>
-                    <h3>{item.title}</h3>
-                    <p>{item.summary}</p>
-                    <p className="form-note">
-                      {item.date} · {item.href}
-                    </p>
+            {view.shown.map((item) => {
+              const thumbUrl = displayedImageUrl(item);
+              return (
+                <li key={item.id} className={item.published ? undefined : "is-hidden"}>
+                  <div className="admin-row">
+                    {thumbUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img className="admin-thumb" src={thumbUrl} alt="" loading="lazy" />
+                    ) : null}
+                    <div className="admin-row-body">
+                      <p className="admin-row-meta">
+                        <span className="eyebrow">{TYPE_LABELS[item.type]}</span>
+                        <span>{item.date}</span>
+                        <span>{hostLabel(item.href)}</span>
+                        {item.published ? null : (
+                          <span className="admin-badge">Oculto</span>
+                        )}
+                      </p>
+                      <h3>{item.title}</h3>
+                      <p className="admin-row-text">{item.summary}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="btn-group">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => startEdit(item)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-ghost-dark"
-                    onClick={() => handleDelete(item.id)}
-                    disabled={busy}
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </li>
-            ))}
+                  <div className="admin-row-actions">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => startEdit(item)}
+                      disabled={busy}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => handleTogglePublished(item)}
+                      disabled={busy}
+                    >
+                      {item.published ? "Ocultar" : "Mostrar"}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-ghost-dark"
+                      onClick={() => handleDelete(item.id)}
+                      disabled={busy}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
+
+        <AdminListFooter
+          shownCount={view.shown.length}
+          matchCount={view.matchCount}
+          remaining={view.remaining}
+          onShowMore={view.showMore}
+        />
       </section>
     </div>
   );

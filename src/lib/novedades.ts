@@ -3,7 +3,12 @@ import { promises as fs } from "fs";
 import path from "path";
 import { assertWritable } from "@/lib/uploads";
 
-export type NovedadType = "newsletter" | "podcast";
+export const NOVEDAD_TYPES = ["newsletter", "podcast", "tip"] as const;
+export type NovedadType = (typeof NOVEDAD_TYPES)[number];
+
+export function isNovedadType(value: unknown): value is NovedadType {
+  return NOVEDAD_TYPES.some((type) => type === value);
+}
 
 export type Novedad = {
   id: string;
@@ -49,7 +54,7 @@ function normalize(items: unknown): Novedad[] {
       const n = item as Partial<Novedad>;
       return (
         typeof n.id === "string" &&
-        (n.type === "newsletter" || n.type === "podcast") &&
+        isNovedadType(n.type) &&
         typeof n.title === "string" &&
         typeof n.summary === "string" &&
         typeof n.date === "string" &&
@@ -137,10 +142,15 @@ export async function saveNovedades(items: Novedad[]): Promise<Novedad[]> {
   return normalized;
 }
 
+const ID_PREFIX: Record<NovedadType, string> = {
+  newsletter: "nl",
+  podcast: "pod",
+  tip: "tip",
+};
+
 export function createId(type: NovedadType): string {
   const stamp = Date.now().toString(36);
-  const prefix = type === "newsletter" ? "nl" : "pod";
-  return `${prefix}-${stamp}`;
+  return `${ID_PREFIX[type]}-${stamp}`;
 }
 
 export type NovedadInput = {
@@ -157,8 +167,8 @@ export function validateNovedadInput(body: unknown): NovedadInput | string {
   if (!body || typeof body !== "object") return "Datos inválidos.";
   const data = body as Record<string, unknown>;
   const type = data.type;
-  if (type !== "newsletter" && type !== "podcast") {
-    return "El tipo debe ser newsletter o podcast.";
+  if (!isNovedadType(type)) {
+    return "El tipo debe ser newsletter, podcast o tip.";
   }
   const title = String(data.title ?? "").trim();
   const summary = String(data.summary ?? "").trim();

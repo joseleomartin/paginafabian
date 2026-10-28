@@ -21,6 +21,7 @@ const SOURCE_LABEL: Record<MetricSource, string> = {
   noticia: "Novedad",
   newsletter: "Newsletter",
   podcast: "Podcast",
+  tip: "Tip",
 };
 
 /** Pasados estos días sin publicar, el panel sugiere retomar el ritmo. */
@@ -93,6 +94,15 @@ function MetricsGrid({ metrics }: { metrics: AdminMetrics }) {
           metrics.podcast.latestDate
             ? `Último: ${formatDate(metrics.podcast.latestDate)}`
             : "Todavía sin episodios"
+        }
+      />
+      <MetricCard
+        label="Tips"
+        value={String(metrics.tips.published)}
+        detail={
+          metrics.tips.latestDate
+            ? `Último: ${formatDate(metrics.tips.latestDate)}`
+            : "Todavía sin tips"
         }
       />
       <MetricCard
@@ -176,7 +186,7 @@ export function AdminDashboard({ onUnauthorized, onNavigate }: Props) {
           Nueva novedad
         </button>
         <button type="button" className="btn btn-secondary" onClick={() => onNavigate("contenido")}>
-          Newsletter y podcast
+          Newsletter, podcast y tips
         </button>
       </div>
 
