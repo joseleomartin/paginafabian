@@ -145,7 +145,7 @@ function collectPublished(
       source: "noticia",
       title: noticia.title,
       date,
-      href: `/novedades#${noticia.id}`,
+      href: `/prensa#${noticia.id}`,
     });
   }
 

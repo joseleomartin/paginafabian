@@ -6,7 +6,7 @@ type Props = {
 };
 
 const SOURCES: ReadonlyArray<{ id: MetricSource; label: string }> = [
-  { id: "noticia", label: "Novedades" },
+  { id: "noticia", label: "Prensa" },
   { id: "newsletter", label: "Newsletter" },
   { id: "podcast", label: "Podcast" },
   { id: "tip", label: "Tips" },

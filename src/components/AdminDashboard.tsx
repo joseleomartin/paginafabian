@@ -74,7 +74,7 @@ function MetricsGrid({ metrics }: { metrics: AdminMetrics }) {
   return (
     <div className="adm-metrics">
       <MetricCard
-        label="Novedades"
+        label="Prensa"
         value={String(metrics.noticias.published)}
         detail={
           metrics.noticias.drafts > 0

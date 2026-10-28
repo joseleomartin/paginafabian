@@ -34,20 +34,20 @@ npm run build
 
 El panel vive en `/admin` (sin link en el menú, no se indexa) y tiene dos pestañas:
 
-- **Novedades**: noticias propias del sitio (charlas, eventos, anuncios) con imagen opcional. Se muestran en `/novedades`.
+- **Prensa**: notas propias del sitio (charlas, eventos, anuncios) con imagen opcional. Se muestran en `/prensa` (`/novedades` redirige ahí).
 - **Newsletter, podcast y tips**: correcciones manuales de lo que se sincroniza solo (ver más abajo).
 
-### Novedades (con imagen)
+### Prensa (con imagen)
 
 - Campos: título, texto (párrafos separados por línea en blanco), imagen opcional, fecha, enlace opcional y publicada/borrador.
 - Imágenes: JPG, PNG o WebP, máximo 4 MB. Las fotos grandes (celular) se reducen solas en el navegador a 1600 px antes de subirse. El servidor valida el **contenido real** del archivo, no la extensión.
 - Al reemplazar o quitar una imagen, o al eliminar la novedad, el archivo anterior se borra.
 - Almacenamiento: en local, `data/noticias.json` + `public/uploads/images/`; en Vercel, Vercel Blob (requiere `BLOB_READ_WRITE_TOKEN`; sin él el panel avisa que no puede guardar).
-- Si querés conservar en el repo las novedades cargadas en local, hacé commit de `data/noticias.json` **y** de `public/uploads/`.
+- Si querés conservar en el repo las notas de prensa cargadas en local, hacé commit de `data/noticias.json` **y** de `public/uploads/`.
 
 ### Newsletter, podcast y tips
 
-Publicá o corregí newsletter, podcast y tips en `/admin`. Cada contenido acepta una imagen propia (mismas reglas que Novedades): reemplaza a la portada de LinkedIn o a la miniatura de YouTube. Editar un contenido conserva su imagen y badge. Al reemplazar o eliminar solo se borran imágenes subidas desde el admin, nunca las covers del repo (`public/images/newsletter/`) ni las de fuentes externas.
+Publicá o corregí newsletter, podcast y tips en `/admin`. Cada contenido acepta una imagen propia (mismas reglas que Prensa): reemplaza a la portada de LinkedIn o a la miniatura de YouTube. Editar un contenido conserva su imagen y badge. Al reemplazar o eliminar solo se borran imágenes subidas desde el admin, nunca las covers del repo (`public/images/newsletter/`) ni las de fuentes externas.
 
 1. Copiá `.env.example` a `.env.local` y definí `ADMIN_PASSWORD`.
 2. En local: `npm run dev` → los cambios se guardan en `data/novedades.json`.

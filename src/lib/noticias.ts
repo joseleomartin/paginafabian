@@ -16,7 +16,7 @@ const BLOB_PATHNAME = "noticias.json";
 
 export class NoticiaNotFoundError extends Error {
   constructor() {
-    super("Novedad no encontrada.");
+    super("Nota no encontrada.");
     this.name = "NoticiaNotFoundError";
   }
 }

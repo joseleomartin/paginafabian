@@ -11,26 +11,26 @@ import { getPublishedNoticias } from "@/lib/noticias";
 export const dynamic = "force-dynamic";
 
 const description =
-  "Novedades de Fabián Canoni: charlas, eventos, publicaciones y anuncios sobre finanzas para PyMEs.";
+  "Prensa de Fabián Canoni: charlas, eventos, publicaciones y anuncios sobre finanzas para PyMEs.";
 
 export const metadata: Metadata = {
-  title: "Novedades",
+  title: "Prensa",
   description,
-  alternates: { canonical: `${siteConfig.url}/novedades` },
+  alternates: { canonical: `${siteConfig.url}/prensa` },
   openGraph: {
-    title: `Novedades | ${siteConfig.name}`,
+    title: `Prensa | ${siteConfig.name}`,
     description,
-    url: `${siteConfig.url}/novedades`,
+    url: `${siteConfig.url}/prensa`,
   },
 };
 
-export default async function NovedadesPage() {
+export default async function PrensaPage() {
   const noticias = await getPublishedNoticias();
 
   return (
     <>
       <PageHero
-        eyebrow="Novedades"
+        eyebrow="Prensa"
         title="Lo último, de primera mano"
         accent="primera mano"
         lead="Charlas, eventos, publicaciones y anuncios para seguir de cerca el trabajo con PyMEs."
@@ -55,7 +55,7 @@ export default async function NovedadesPage() {
           ) : (
             <Reveal>
               <div className="noticias-empty">
-                <h2>Pronto vas a encontrar novedades acá</h2>
+                <h2>Pronto vas a encontrar contenido de prensa acá</h2>
                 <p>
                   Mientras tanto, podés leer la newsletter semanal o escuchar el
                   podcast.

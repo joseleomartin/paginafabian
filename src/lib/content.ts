@@ -55,7 +55,7 @@ export const navLinks = [
   { href: "/en-clave-pyme", label: "Newsletter" },
   { href: "/off-the-record", label: "Podcast" },
   { href: "/tips", label: "Tips PyMEs" },
-  { href: "/novedades", label: "Novedades" },
+  { href: "/prensa", label: "Prensa" },
   { href: "/contacto", label: "Contacto" },
 ] as const;
 

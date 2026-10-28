@@ -73,7 +73,7 @@ type Props = {
   onUnauthorized: () => void;
 };
 
-/** Alta, edición y baja de las novedades del sitio, con imagen. */
+/** Alta, edición y baja de las notas de prensa del sitio, con imagen. */
 export function AdminNoticiasManager({ onUnauthorized }: Props) {
   const [items, setItems] = useState<Noticia[]>([]);
   const [form, setForm] = useState<FormState>(emptyForm);
@@ -92,7 +92,7 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
     }
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setError(data.error || "No se pudieron cargar las novedades.");
+      setError(data.error || "No se pudieron cargar las notas de prensa.");
       return;
     }
     const data = await res.json();
@@ -100,7 +100,9 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
   }, [onUnauthorized]);
 
   useEffect(() => {
-    loadItems().catch(() => setError("No se pudieron cargar las novedades."));
+    loadItems().catch(() =>
+      setError("No se pudieron cargar las notas de prensa.")
+    );
   }, [loadItems]);
 
   function resetForm() {
@@ -150,7 +152,7 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
         toFormData(form, image.file, image.removeExisting)
       );
       if (!saved) return;
-      setMessage(editingId ? "Novedad actualizada." : "Novedad publicada.");
+      setMessage(editingId ? "Nota actualizada." : "Nota publicada.");
       resetForm();
       await loadItems();
     } finally {
@@ -169,7 +171,7 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
         toFormData({ ...toForm(item), published: !item.published }, null, false)
       );
       if (!saved) return;
-      setMessage(item.published ? "Novedad oculta del sitio." : "Novedad publicada.");
+      setMessage(item.published ? "Nota oculta del sitio." : "Nota publicada.");
       await loadItems();
     } finally {
       setBusy(false);
@@ -195,7 +197,7 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
         return;
       }
       if (editingId === item.id) resetForm();
-      setMessage("Novedad eliminada.");
+      setMessage("Nota eliminada.");
       // El servidor ya confirmó el borrado: se refleja al instante, sin volver a leer.
       setItems((current) => current.filter((entry) => entry.id !== item.id));
     } finally {
@@ -210,8 +212,8 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
       <section className="admin-card">
         <div className="admin-header">
           <div>
-            <p className="eyebrow">Novedades del sitio</p>
-            <h2>{editingId ? "Editar novedad" : "Nueva novedad"}</h2>
+            <p className="eyebrow">Prensa del sitio</p>
+            <h2>{editingId ? "Editar nota" : "Nueva nota"}</h2>
           </div>
         </div>
 
@@ -295,7 +297,7 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
                 ? "Guardando…"
                 : editingId
                   ? "Guardar cambios"
-                  : "Publicar novedad"}
+                  : "Publicar nota"}
             </button>
             {editingId ? (
               <button
@@ -318,7 +320,7 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
 
         {items.length === 0 ? (
           <p className="form-note">
-            Todavía no cargaste novedades. Completá el formulario para publicar
+            Todavía no cargaste notas de prensa. Completá el formulario para publicar
             la primera.
           </p>
         ) : (
@@ -331,7 +333,7 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
 
             {view.matchCount === 0 ? (
               <p className="form-note">
-                Ninguna novedad coincide con la búsqueda o el filtro.
+                Ninguna nota coincide con la búsqueda o el filtro.
               </p>
             ) : (
               <ul className="admin-list">

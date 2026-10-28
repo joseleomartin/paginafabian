@@ -30,7 +30,7 @@ type TabDefinition = {
 
 const TABS: readonly TabDefinition[] = [
   { id: "resumen", label: "Resumen", Icon: IconOverview },
-  { id: "noticias", label: "Novedades", Icon: IconNews },
+  { id: "noticias", label: "Prensa", Icon: IconNews },
   { id: "contenido", label: "Contenido", Icon: IconBroadcast },
 ];
 
@@ -40,7 +40,7 @@ const SECTION_COPY: Record<Tab, { title: string; lead: string }> = {
     lead: "Así viene el contenido del sitio.",
   },
   noticias: {
-    title: "Novedades",
+    title: "Prensa",
     lead: "Cargá charlas, eventos y anuncios, con su imagen.",
   },
   contenido: {
@@ -146,7 +146,7 @@ export function AdminPanel({ passwordConfigured }: Props) {
           </div>
           <div className="admin-login-body">
             <h1>Ingresar</h1>
-            <p>Gestioná las novedades, la newsletter y el podcast del sitio.</p>
+            <p>Gestioná la prensa, la newsletter, el podcast y los tips del sitio.</p>
             <form className="contact-form" onSubmit={handleLogin}>
               <div className="form-field">
                 <label htmlFor="password">Contraseña</label>

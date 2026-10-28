@@ -35,6 +35,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // La sección "Novedades" pasó a llamarse "Prensa": se conservan los enlaces viejos.
+      { source: "/novedades", destination: "/prensa", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

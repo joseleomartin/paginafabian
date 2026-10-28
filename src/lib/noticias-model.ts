@@ -1,5 +1,5 @@
 /**
- * Modelo de la sección "Novedades" (noticias cargadas desde el admin).
+ * Modelo de la sección "Prensa" (noticias cargadas desde el admin).
  * Módulo puro (sin I/O ni alias de paths) para poder testearlo con `node --test`.
  */
 

@@ -231,7 +231,7 @@ describe("buildAdminMetrics: recientes", () => {
       novedades: [novedad("n1", "newsletter", "2026-10-05")],
     });
     const byId = Object.fromEntries(metrics.recent.map((item) => [item.id, item]));
-    assert.equal(byId["nt-1"].href, "/novedades#nt-1");
+    assert.equal(byId["nt-1"].href, "/prensa#nt-1");
     assert.equal(byId.n1.href, "https://example.com/n1");
   });
 
