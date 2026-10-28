@@ -1,4 +1,7 @@
-import { extractArticlePublishedDate } from "@/lib/linkedin-article-date";
+import {
+  extractArticleImageUrl,
+  extractArticlePublishedDate,
+} from "@/lib/linkedin-article";
 
 export type NewsletterEdition = {
   id: string;
@@ -138,8 +141,11 @@ async function fetchFromRss(): Promise<NewsletterEdition[]> {
 
 const ARTICLE_FETCH_TIMEOUT_MS = 8000;
 
-/** Fecha real de una edición leyendo su página; null si LinkedIn no la entrega. */
-async function fetchArticlePublishedDate(url: string): Promise<string | null> {
+type ArticleMeta = { published: string | null; imageUrl: string | null };
+
+/** Fecha real y portada de una edición leyendo su página; null en lo que LinkedIn no entregue. */
+async function fetchArticleMeta(url: string): Promise<ArticleMeta> {
+  const unavailable: ArticleMeta = { published: null, imageUrl: null };
   try {
     const response = await fetch(url, {
       cache: "no-store",
@@ -151,11 +157,16 @@ async function fetchArticlePublishedDate(url: string): Promise<string | null> {
         "Accept-Language": "es-AR,es;q=0.9",
       },
     });
-    if (!response.ok) return null;
-    return extractArticlePublishedDate(await response.text());
+    if (!response.ok) return unavailable;
+
+    const html = await response.text();
+    return {
+      published: extractArticlePublishedDate(html),
+      imageUrl: extractArticleImageUrl(html),
+    };
   } catch (error) {
-    console.warn(`[linkedin-newsletter] no se pudo leer la fecha de ${url}`, error);
-    return null;
+    console.warn(`[linkedin-newsletter] no se pudo leer ${url}`, error);
+    return unavailable;
   }
 }
 
@@ -206,24 +217,25 @@ async function fetchFromNewsletterPage(): Promise<NewsletterEdition[]> {
       candidates.push({ title, url });
     }
 
-    // La landing no trae fechas: se leen de cada edición. Si no se puede,
-    // se omite (se reintenta en el próximo sync) en vez de inventar "hoy".
-    const dated = await Promise.all(
+    // La landing no trae fechas ni portadas: se leen de cada edición. Si no hay
+    // fecha, se omite (se reintenta en el próximo sync) en vez de inventar "hoy".
+    const resolved = await Promise.all(
       candidates.map(async (candidate) => ({
         ...candidate,
-        published: await fetchArticlePublishedDate(candidate.url),
+        ...(await fetchArticleMeta(candidate.url)),
       }))
     );
 
-    return dated.flatMap((edition, index) =>
-      edition.published
+    return resolved.flatMap(({ published, imageUrl, title, url }, index) =>
+      published
         ? [
             {
-              id: slugId(edition.url, index),
-              title: edition.title,
-              url: edition.url,
-              published: edition.published,
+              id: slugId(url, index),
+              title,
+              url,
+              published,
               summary: "Edición de En Clave PyME en LinkedIn.",
+              ...(imageUrl ? { imageUrl } : {}),
             },
           ]
         : []

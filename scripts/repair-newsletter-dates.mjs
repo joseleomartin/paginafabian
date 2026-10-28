@@ -1,13 +1,13 @@
 /**
  * Corrige las fechas de las ediciones del newsletter guardadas en
- * data/novedades.json usando la fecha real que publica LinkedIn en cada edición.
+ * data/novedades.json usando la fecha real que publica LinkedIn en cada ediciÃ³n.
  *
  *   node scripts/repair-newsletter-dates.mjs          # solo muestra diferencias
  *   node scripts/repair-newsletter-dates.mjs --write  # aplica (con respaldo)
  */
 import { copyFile, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { extractArticlePublishedDate } from "../src/lib/linkedin-article-date.ts";
+import { extractArticlePublishedDate } from "../src/lib/linkedin-article.ts";
 
 const DATA_FILE = path.join(process.cwd(), "data", "novedades.json");
 const FETCH_TIMEOUT_MS = 8000;
@@ -16,7 +16,7 @@ const shouldWrite = process.argv.includes("--write");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** Día calendario en Buenos Aires, igual que usa el panel de admin. */
+/** DÃ­a calendario en Buenos Aires, igual que usa el panel de admin. */
 function toBuenosAiresDate(isoDate) {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Argentina/Buenos_Aires",
@@ -60,7 +60,7 @@ for (const item of newsletters) {
 if (unreadable > 0) {
   console.warn(
     `\n${unreadable} ediciones no se pudieron verificar (LinkedIn limita las consultas). ` +
-      "Reintentá en unos minutos."
+      "ReintentÃ¡ en unos minutos."
   );
 }
 
@@ -78,7 +78,7 @@ for (const { item, realDate } of corrections) {
 }
 
 if (!shouldWrite) {
-  console.log("\nModo simulación. Ejecutá con --write para aplicar los cambios.");
+  console.log("\nModo simulaciÃ³n. EjecutÃ¡ con --write para aplicar los cambios.");
   process.exit(0);
 }
 
