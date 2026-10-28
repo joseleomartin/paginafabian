@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SocialLinks } from "@/components/SocialLinks";
 import { navLinks, siteConfig } from "@/lib/content";
 
 export function Footer() {
@@ -13,6 +14,7 @@ export function Footer() {
               Fabián Canoni<span>.</span>
             </div>
             <p className="footer-tagline">{siteConfig.tagline}</p>
+            <SocialLinks variant="icons" className="footer-social" />
           </div>
           <Link href="/contacto" className="btn btn-primary">
             Conversemos
@@ -38,25 +40,18 @@ export function Footer() {
               <Link href="/en-clave-pyme">En Clave PyME</Link>
               <Link href="/off-the-record">Off the Record</Link>
               <a
-                href={siteConfig.social.linkedin}
+                href={siteConfig.social.newsletter}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                LinkedIn
+                Newsletter
               </a>
               <a
-                href={siteConfig.social.instagram}
+                href={siteConfig.social.podcast}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Instagram
-              </a>
-              <a
-                href={siteConfig.social.youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                YouTube
+                Podcast en YouTube
               </a>
             </div>
           </div>

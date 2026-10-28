@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MediaCarousels } from "@/components/MediaCarousels";
 import { Reveal } from "@/components/Reveal";
+import { SocialLinks } from "@/components/SocialLinks";
 import {
   highlights,
   newsletter,
@@ -9,57 +11,63 @@ import {
   siteConfig,
 } from "@/lib/content";
 import { images } from "@/lib/images";
+import { getPublishedNovedades } from "@/lib/novedades";
+import { refreshNovedades } from "@/lib/sync-novedades";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  await refreshNovedades("newsletter", "podcast");
+
+  const [newsletterItems, podcastItems] = await Promise.all([
+    getPublishedNovedades("newsletter"),
+    getPublishedNovedades("podcast"),
+  ]);
+
   return (
     <>
       <section className="hero" aria-label="Presentación">
-        <div className="hero-copy">
-          <p className="hero-brand">
-            Fabián Canoni<span>.</span>
-          </p>
-          <h1>
-            Empezá a decidir
-            <br />
-            con más claridad
-          </h1>
-          <p className="lead">
-            CFO Fractional para dueños de PyMEs. Finanzas y estrategia, en
-            lenguaje de negocio.
-          </p>
-          <div className="btn-group">
-            <Link href="/contacto" className="btn btn-primary">
-              Conversemos
-            </Link>
-            <Link href="/servicios" className="btn btn-secondary">
-              Cómo trabajo
-            </Link>
-          </div>
-        </div>
-
         <div className="hero-photo">
           <Image
             src={images.hero.src}
             alt={images.hero.alt}
             fill
             priority
-            sizes="(max-width: 900px) 100vw, 55vw"
+            sizes="(max-width: 900px) 100vw, 58vw"
             style={{
               objectFit: "cover",
-              objectPosition: "62% 20%",
+              objectPosition: images.hero.position,
             }}
           />
+          <div className="hero-fade" aria-hidden="true" />
         </div>
-      </section>
 
-      <section className="proof-bar" aria-label="Trayectoria">
-        <div className="container proof-grid">
-          {highlights.map((item) => (
-            <div key={item.label} className="proof-item">
-              <strong>{item.value}</strong>
-              <span>{item.label}</span>
-            </div>
-          ))}
+        <div className="hero-copy">
+          <p className="eyebrow">
+            CFO Fractional · Speaker · Coach ejecutivo
+          </p>
+          <h1>
+            Empezá a decidir
+            <br />
+            con más <span className="text-accent">claridad</span>
+          </h1>
+          <SocialLinks variant="hero" />
+          <div className="hero-stats" aria-label="Trayectoria">
+            {highlights.slice(0, 3).map((item) => (
+              <div key={item.label} className="hero-stat">
+                <strong>{item.value}</strong>
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </div>
+          <div className="btn-group hero-actions">
+            <Link href="/sobre" className="btn btn-primary">
+              Sobre mí
+            </Link>
+            <Link href="/contacto" className="btn btn-secondary">
+              Contacto
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -150,10 +158,11 @@ export default function HomePage() {
         <div className="container speaker-content">
           <Reveal>
             <p className="eyebrow">Charlas</p>
-            <h2>Contratame como speaker</h2>
+            <h2>Cuando el número necesita una voz</h2>
             <p className="lead">
-              Conversaciones prácticas sobre finanzas, decisiones y PyMEs para
-              equipos, eventos y comunidades.
+              Charlas claras sobre finanzas, decisiones y el día a día de una
+              PyME. Sin tecnicismos de más: para equipos, eventos y comunidades
+              que quieren pensar el negocio con más lucidez.
             </p>
             <div className="btn-group">
               <Link href="/contacto" className="btn btn-primary">
@@ -182,7 +191,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-marquees" aria-label="Newsletter y podcast">
         <div className="container">
           <Reveal>
             <div className="section-head">
@@ -194,77 +203,33 @@ export default function HomePage() {
               </p>
             </div>
           </Reveal>
+        </div>
 
-          <div className="media-duo">
-            <Reveal>
-              <article className="media-panel">
-                <div className="media-panel-visual media-panel-visual--landscape">
-                  <Image
-                    src={images.newsletter.src}
-                    alt={images.newsletter.alt}
-                    fill
-                    sizes="(max-width: 900px) 100vw, 50vw"
-                    className="newsletter-shot"
-                  />
-                </div>
-                <div className="media-panel-body">
-                  <p className="eyebrow">Newsletter</p>
-                  <h3>{newsletter.name}</h3>
-                  <p>{newsletter.tagline}</p>
-                  <div className="btn-group">
-                    <a
-                      href={siteConfig.social.newsletter}
-                      className="btn btn-primary"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Suscribirme
-                    </a>
-                    <Link href="/en-clave-pyme" className="btn btn-secondary">
-                      Ver más
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            </Reveal>
+        <MediaCarousels
+          newsletters={newsletterItems}
+          podcasts={podcastItems}
+          newsletterHref="/en-clave-pyme"
+          podcastHref="/off-the-record"
+          subscribeHref={siteConfig.social.newsletter}
+          youtubeHref={podcast.playlistUrl}
+        />
+      </section>
 
-            <Reveal delay={1}>
-              <article className="media-panel media-panel-dark">
-                <div className="media-panel-visual media-panel-visual--landscape podcast-visual">
-                  <Image
-                    src={images.otrFrameEp2.src}
-                    alt={images.otrFrameEp2.alt}
-                    fill
-                    sizes="(max-width: 900px) 100vw, 50vw"
-                    className="img-cover"
-                    style={{
-                      objectFit: "cover",
-                      objectPosition: images.otrFrameEp2.position,
-                    }}
-                  />
-                  <div className="podcast-badge">{podcast.name}</div>
-                </div>
-                <div className="media-panel-body">
-                  <p className="eyebrow">Podcast</p>
-                  <h3>{podcast.name}</h3>
-                  <p>{podcast.tagline}</p>
-                  <div className="btn-group">
-                    <Link href="/off-the-record" className="btn btn-primary">
-                      Escuchar
-                    </Link>
-                    <a
-                      href={podcast.playlistUrl}
-                      className="btn btn-ghost-dark"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      YouTube
-                    </a>
-                  </div>
-                </div>
-              </article>
-            </Reveal>
-          </div>
+      <section className="section section-warm social-follow" aria-label="Redes sociales">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <p className="eyebrow">Redes</p>
+              <h2>Seguime donde ya estoy publicando</h2>
+              <p className="lead">
+                LinkedIn, Instagram y YouTube: contenido sobre finanzas,
+                decisiones y lo que pasa detrás de los números.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={1}>
+            <SocialLinks variant="cards" />
+          </Reveal>
         </div>
       </section>
 

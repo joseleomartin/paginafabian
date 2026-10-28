@@ -1,87 +1,94 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
-import type { Novedad, NovedadType } from "@/lib/novedades";
+import {
+  FormEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { AdminBrand } from "@/components/AdminBrand";
+import { AdminContentManager } from "@/components/AdminContentManager";
+import { AdminDashboard } from "@/components/AdminDashboard";
+import {
+  IconBroadcast,
+  IconExternal,
+  IconLogout,
+  IconNews,
+  IconOverview,
+} from "@/components/AdminIcons";
+import { AdminNoticiasManager } from "@/components/AdminNoticiasManager";
 
-type FormState = {
-  type: NovedadType;
-  title: string;
-  summary: string;
-  date: string;
-  href: string;
-  youtubeId: string;
-  published: boolean;
+type Tab = "resumen" | "noticias" | "contenido";
+
+type TabDefinition = {
+  id: Tab;
+  label: string;
+  Icon: typeof IconOverview;
 };
 
-const emptyForm = (): FormState => ({
-  type: "newsletter",
-  title: "",
-  summary: "",
-  date: new Date().toISOString().slice(0, 10),
-  href: "",
-  youtubeId: "",
-  published: true,
-});
+const TABS: readonly TabDefinition[] = [
+  { id: "resumen", label: "Resumen", Icon: IconOverview },
+  { id: "noticias", label: "Novedades", Icon: IconNews },
+  { id: "contenido", label: "Newsletter y podcast", Icon: IconBroadcast },
+];
 
-function toForm(item: Novedad): FormState {
-  return {
-    type: item.type,
-    title: item.title,
-    summary: item.summary,
-    date: item.date.slice(0, 10),
-    href: item.href,
-    youtubeId: item.youtubeId || "",
-    published: item.published,
-  };
-}
+const SECTION_COPY: Record<Tab, { title: string; lead: string }> = {
+  resumen: {
+    title: "Hola, Fabián",
+    lead: "Así viene el contenido del sitio.",
+  },
+  noticias: {
+    title: "Novedades",
+    lead: "Cargá charlas, eventos y anuncios, con su imagen.",
+  },
+  contenido: {
+    title: "Newsletter y podcast",
+    lead: "Se sincronizan solos desde LinkedIn y YouTube; acá podés corregirlos o sumar uno a mano.",
+  },
+};
+
+const dateFormatter = new Intl.DateTimeFormat("es-AR", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+});
 
 type Props = {
   passwordConfigured: boolean;
 };
 
+function CenteredCard({ children }: { children: ReactNode }) {
+  return (
+    <div className="admin-center">
+      <div className="admin-card">{children}</div>
+    </div>
+  );
+}
+
 export function AdminPanel({ passwordConfigured }: Props) {
   const [authed, setAuthed] = useState(false);
   const [checking, setChecking] = useState(true);
   const [password, setPassword] = useState("");
-  const [items, setItems] = useState<Novedad[]>([]);
-  const [form, setForm] = useState<FormState>(emptyForm);
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"all" | NovedadType>("all");
-  const [error, setError] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+  const [tab, setTab] = useState<Tab>("resumen");
 
-  async function loadItems() {
-    const res = await fetch("/api/novedades?all=1", { cache: "no-store" });
-    if (res.status === 401) {
-      setAuthed(false);
-      setError("");
-      setMessage("");
-      return;
-    }
-    if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
-      setError(data.error || "No se pudieron cargar las novedades.");
-      return;
-    }
-    const data = await res.json();
-    setItems(data.items || []);
-    setAuthed(true);
-    setError("");
-  }
+  const markUnauthorized = useCallback(() => setAuthed(false), []);
+  const today = useMemo(() => dateFormatter.format(new Date()), []);
 
+  // Un pedido autenticado liviano decide si ya hay una sesión válida.
   useEffect(() => {
-    loadItems()
-      .catch(() => {
-        setAuthed(false);
-        setError("");
-      })
+    fetch("/api/admin/session", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : { authenticated: false }))
+      .then((data: { authenticated?: boolean }) => setAuthed(data.authenticated === true))
+      .catch(() => setAuthed(false))
       .finally(() => setChecking(false));
   }, []);
 
-  async function handleLogin(e: FormEvent) {
-    e.preventDefault();
+  async function handleLogin(event: FormEvent) {
+    event.preventDefault();
     setBusy(true);
     setLoginError("");
     try {
@@ -96,7 +103,8 @@ export function AdminPanel({ passwordConfigured }: Props) {
         return;
       }
       setPassword("");
-      await loadItems();
+      setTab("resumen");
+      setAuthed(true);
     } finally {
       setBusy(false);
     }
@@ -105,319 +113,130 @@ export function AdminPanel({ passwordConfigured }: Props) {
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" });
     setAuthed(false);
-    setItems([]);
-    setError("");
-    setMessage("");
     setLoginError("");
-    resetForm();
   }
-
-  function startEdit(item: Novedad) {
-    setEditingId(item.id);
-    setForm(toForm(item));
-    setMessage("");
-    setError("");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function resetForm() {
-    setEditingId(null);
-    setForm(emptyForm());
-  }
-
-  async function handleSave(e: FormEvent) {
-    e.preventDefault();
-    setBusy(true);
-    setError("");
-    setMessage("");
-    try {
-      const payload = {
-        type: form.type,
-        title: form.title,
-        summary: form.summary,
-        date: form.date,
-        href: form.href,
-        youtubeId: form.youtubeId,
-        published: form.published,
-      };
-      const res = await fetch(
-        editingId ? `/api/novedades/${editingId}` : "/api/novedades",
-        {
-          method: editingId ? "PUT" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.error || "No se pudo guardar.");
-        return;
-      }
-      setMessage(editingId ? "Novedad actualizada." : "Novedad publicada.");
-      resetForm();
-      await loadItems();
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function handleDelete(id: string) {
-    if (!confirm("¿Eliminar esta novedad?")) return;
-    setBusy(true);
-    setError("");
-    try {
-      const res = await fetch(`/api/novedades/${id}`, { method: "DELETE" });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.error || "No se pudo eliminar.");
-        return;
-      }
-      if (editingId === id) resetForm();
-      setMessage("Novedad eliminada.");
-      await loadItems();
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  const visible = items.filter(
-    (item) => filter === "all" || item.type === filter
-  );
 
   if (!passwordConfigured) {
     return (
-      <div className="admin-card">
+      <CenteredCard>
         <p className="eyebrow">Admin</p>
-        <h1>Panel de novedades</h1>
+        <h1>Panel de administración</h1>
         <p className="lead">
           Configurá la variable de entorno <code>ADMIN_PASSWORD</code> y
           reiniciá el servidor para habilitar el acceso.
         </p>
-      </div>
+      </CenteredCard>
     );
   }
 
   if (checking) {
     return (
-      <div className="admin-card">
+      <CenteredCard>
         <p>Cargando panel…</p>
-      </div>
+      </CenteredCard>
     );
   }
 
   if (!authed) {
     return (
-      <div className="admin-card admin-card-narrow">
-        <p className="eyebrow">Admin</p>
-        <h1>Ingresar</h1>
-        <p>Gestioná novedades de newsletter y podcast.</p>
-        <form className="contact-form" onSubmit={handleLogin}>
-          <div className="form-field">
-            <label htmlFor="password">Contraseña</label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+      <div className="admin-center">
+        <div className="admin-card admin-login">
+          <div className="admin-login-brand">
+            <AdminBrand size={3.5} />
           </div>
-          {loginError ? <p className="admin-error">{loginError}</p> : null}
-          <button type="submit" className="btn btn-primary" disabled={busy}>
-            Entrar
-          </button>
-        </form>
+          <div className="admin-login-body">
+            <h1>Ingresar</h1>
+            <p>Gestioná las novedades, la newsletter y el podcast del sitio.</p>
+            <form className="contact-form" onSubmit={handleLogin}>
+              <div className="form-field">
+                <label htmlFor="password">Contraseña</label>
+                <input
+                  id="password"
+                  type="password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              {loginError ? <p className="admin-error">{loginError}</p> : null}
+              <button type="submit" className="btn btn-primary" disabled={busy}>
+                Entrar
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
 
+  const copy = SECTION_COPY[tab];
+
   return (
-    <div className="admin-grid">
-      <section className="admin-card">
-        <div className="admin-header">
-          <div>
-            <p className="eyebrow">Admin</p>
-            <h1>Novedades</h1>
-          </div>
-          <button type="button" className="btn btn-secondary" onClick={handleLogout}>
+    <div className="adm">
+      <aside className="adm-side">
+        <AdminBrand />
+
+        <nav
+          className="adm-nav"
+          role="tablist"
+          aria-label="Secciones del panel"
+          aria-orientation="vertical"
+        >
+          {TABS.map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              id={`admin-tab-${id}`}
+              aria-selected={tab === id}
+              aria-controls="admin-tabpanel"
+              onClick={() => setTab(id)}
+            >
+              <Icon />
+              {label}
+            </button>
+          ))}
+        </nav>
+
+        <div className="adm-side-foot">
+          <a href="/" target="_blank" rel="noopener noreferrer">
+            <IconExternal />
+            Ver el sitio
+          </a>
+          <button type="button" onClick={handleLogout}>
+            <IconLogout />
             Salir
           </button>
         </div>
+      </aside>
 
-        <form className="contact-form" onSubmit={handleSave}>
-          <div className="admin-form-row">
-            <div className="form-field">
-              <label htmlFor="type">Tipo</label>
-              <select
-                id="type"
-                value={form.type}
-                onChange={(e) =>
-                  setForm((f) => ({
-                    ...f,
-                    type: e.target.value as NovedadType,
-                  }))
-                }
-              >
-                <option value="newsletter">Newsletter</option>
-                <option value="podcast">Podcast</option>
-              </select>
-            </div>
-            <div className="form-field">
-              <label htmlFor="date">Fecha</label>
-              <input
-                id="date"
-                type="date"
-                value={form.date}
-                onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
-                required
-              />
-            </div>
-          </div>
+      <main className="adm-main">
+        <header className="adm-head">
+          {tab === "resumen" ? <p className="adm-eyebrow">{today}</p> : null}
+          <h1>{copy.title}</h1>
+          <p className="adm-lead">{copy.lead}</p>
+        </header>
 
-          <div className="form-field">
-            <label htmlFor="title">Título</label>
-            <input
-              id="title"
-              value={form.title}
-              onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-              required
+        <div
+          id="admin-tabpanel"
+          role="tabpanel"
+          aria-labelledby={`admin-tab-${tab}`}
+        >
+          {tab === "resumen" ? (
+            <AdminDashboard
+              onUnauthorized={markUnauthorized}
+              onNavigate={setTab}
             />
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="summary">Resumen</label>
-            <textarea
-              id="summary"
-              value={form.summary}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, summary: e.target.value }))
-              }
-              required
-            />
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="href">Enlace</label>
-            <input
-              id="href"
-              type="url"
-              placeholder="https://…"
-              value={form.href}
-              onChange={(e) => setForm((f) => ({ ...f, href: e.target.value }))}
-              required
-            />
-          </div>
-
-          {form.type === "podcast" ? (
-            <div className="form-field">
-              <label htmlFor="youtubeId">ID de YouTube (opcional)</label>
-              <input
-                id="youtubeId"
-                placeholder="ej. Nf2calxXrms"
-                value={form.youtubeId}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, youtubeId: e.target.value }))
-                }
-              />
-            </div>
           ) : null}
-
-          <label className="admin-check">
-            <input
-              type="checkbox"
-              checked={form.published}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, published: e.target.checked }))
-              }
-            />
-            Publicada en el sitio
-          </label>
-
-          {error ? <p className="admin-error">{error}</p> : null}
-          {message ? <p className="admin-ok">{message}</p> : null}
-
-          <div className="btn-group">
-            <button type="submit" className="btn btn-primary" disabled={busy}>
-              {editingId ? "Guardar cambios" : "Publicar novedad"}
-            </button>
-            {editingId ? (
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={resetForm}
-              >
-                Cancelar edición
-              </button>
-            ) : null}
-          </div>
-        </form>
-      </section>
-
-      <section className="admin-card">
-        <div className="admin-header">
-          <h2>Listado</h2>
-          <div className="admin-filters">
-            {(
-              [
-                ["all", "Todas"],
-                ["newsletter", "Newsletter"],
-                ["podcast", "Podcast"],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                className={
-                  filter === value ? "btn btn-primary" : "btn btn-secondary"
-                }
-                onClick={() => setFilter(value)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          {tab === "noticias" ? (
+            <AdminNoticiasManager onUnauthorized={markUnauthorized} />
+          ) : null}
+          {tab === "contenido" ? (
+            <AdminContentManager onUnauthorized={markUnauthorized} />
+          ) : null}
         </div>
-
-        {visible.length === 0 ? (
-          <p className="form-note">Todavía no hay novedades en este filtro.</p>
-        ) : (
-          <ul className="admin-list">
-            {visible.map((item) => (
-              <li key={item.id}>
-                <div>
-                  <p className="eyebrow">
-                    {item.type === "newsletter" ? "Newsletter" : "Podcast"}
-                    {item.published ? "" : " · borrador"}
-                  </p>
-                  <h3>{item.title}</h3>
-                  <p>{item.summary}</p>
-                  <p className="form-note">
-                    {item.date} · {item.href}
-                  </p>
-                </div>
-                <div className="btn-group">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => startEdit(item)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-ghost-dark"
-                    onClick={() => handleDelete(item.id)}
-                    disabled={busy}
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+      </main>
     </div>
   );
 }

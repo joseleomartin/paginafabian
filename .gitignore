@@ -31,6 +31,9 @@ yarn-error.log*
 # env
 .env*.local
 
+# LinkedIn scrape session (cookies)
+/scripts/.li-profile/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
@@ -39,3 +42,9 @@ next-env.d.ts
 /Material/
 /material/
 /_extracted/
+
+# capturas REA locales
+/.rea-ref/
+
+# Respaldos generados por scripts de mantenimiento
+*.bak

@@ -6,13 +6,13 @@
  */
 
 export const images = {
-  /** Home hero */
+  /** Home hero — escena en escenario (intercambiada con intro) */
   hero: {
     src: "/images/speaking-1660.jpg",
     alt: "Fabián Canoni hablando en un evento profesional",
     width: 2000,
     height: 1333,
-    position: "68% 26%",
+    position: "68% 18%",
   },
 
   /** Home banda speaker */
@@ -24,13 +24,13 @@ export const images = {
     position: "72% 40%",
   },
 
-  /** Home intro */
+  /** Home intro — retrato estudio (intercambiada con hero) */
   portraitWarm: {
     src: "/images/portrait-smile.jpg",
     alt: "Retrato de Fabián Canoni",
     width: 960,
     height: 1280,
-    position: "50% 10%",
+    position: "50% 12%",
   },
 
   /** Sobre — cuerpo */

@@ -1,6 +1,7 @@
 import { put, list } from "@vercel/blob";
 import { promises as fs } from "fs";
 import path from "path";
+import { assertWritable } from "@/lib/uploads";
 
 export type NovedadType = "newsletter" | "podcast";
 
@@ -12,21 +13,37 @@ export type Novedad = {
   date: string;
   href: string;
   youtubeId?: string;
+  imageUrl?: string;
+  badge?: string;
   published: boolean;
 };
 
 const DATA_PATH = path.join(process.cwd(), "data", "novedades.json");
 const BLOB_PATHNAME = "novedades.json";
 
-function sortByDate(items: Novedad[]): Novedad[] {
-  return [...items].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+function editionNumber(title: string): number | null {
+  const match = title.match(/#\s*(\d+)/);
+  return match ? Number.parseInt(match[1], 10) : null;
+}
+
+/** Newsletters by edition # (desc); otherwise by date (desc). */
+function sortNovedades(items: Novedad[]): Novedad[] {
+  return [...items].sort((a, b) => {
+    if (a.type === "newsletter" && b.type === "newsletter") {
+      const na = editionNumber(a.title);
+      const nb = editionNumber(b.title);
+      if (na !== null && nb !== null && na !== nb) return nb - na;
+    }
+    const byDate =
+      new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (byDate !== 0) return byDate;
+    return a.title.localeCompare(b.title, "es");
+  });
 }
 
 function normalize(items: unknown): Novedad[] {
   if (!Array.isArray(items)) return [];
-  return sortByDate(
+  return sortNovedades(
     items.filter((item): item is Novedad => {
       if (!item || typeof item !== "object") return false;
       const n = item as Partial<Novedad>;
@@ -44,12 +61,27 @@ function normalize(items: unknown): Novedad[] {
 }
 
 async function readFromFile(): Promise<Novedad[]> {
-  const raw = await fs.readFile(DATA_PATH, "utf8");
-  return normalize(JSON.parse(raw));
+  try {
+    const raw = await fs.readFile(DATA_PATH, "utf8");
+    return normalize(JSON.parse(raw));
+  } catch (error) {
+    const isMissing =
+      error instanceof Error &&
+      "code" in error &&
+      (error as NodeJS.ErrnoException).code === "ENOENT";
+    if (!isMissing) {
+      console.error("[novedades] no se pudo leer data/novedades.json", error);
+    }
+    return [];
+  }
 }
 
 async function writeToFile(items: Novedad[]): Promise<void> {
-  await fs.writeFile(DATA_PATH, `${JSON.stringify(sortByDate(items), null, 2)}\n`, "utf8");
+  await fs.writeFile(
+    DATA_PATH,
+    `${JSON.stringify(sortNovedades(items), null, 2)}\n`,
+    "utf8"
+  );
 }
 
 async function readFromBlob(): Promise<Novedad[] | null> {
@@ -61,13 +93,14 @@ async function readFromBlob(): Promise<Novedad[] | null> {
     const res = await fetch(blob.url, { cache: "no-store" });
     if (!res.ok) return null;
     return normalize(await res.json());
-  } catch {
+  } catch (error) {
+    console.error("[novedades] no se pudo leer desde Vercel Blob", error);
     return null;
   }
 }
 
 async function writeToBlob(items: Novedad[]): Promise<void> {
-  await put(BLOB_PATHNAME, JSON.stringify(sortByDate(items), null, 2), {
+  await put(BLOB_PATHNAME, JSON.stringify(sortNovedades(items), null, 2), {
     access: "public",
     contentType: "application/json",
     addRandomSuffix: false,
@@ -91,10 +124,11 @@ export async function getPublishedNovedades(
 }
 
 export async function saveNovedades(items: Novedad[]): Promise<Novedad[]> {
-  const normalized = sortByDate(normalize(items));
+  const normalized = sortNovedades(normalize(items));
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     await writeToBlob(normalized);
   } else {
+    assertWritable();
     await writeToFile(normalized);
   }
   return normalized;

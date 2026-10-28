@@ -17,19 +17,44 @@ export const siteConfig = {
   social: {
     linkedin: "https://www.linkedin.com/in/fabiancanoni/",
     instagram: "https://www.instagram.com/fabiancanoni/",
-    youtube: "https://www.youtube.com/watch?v=Nf2calxXrms",
-    podcast:
-      "https://www.youtube.com/playlist?list=PLLrqHplVIBeEYR6AQCZHr1T6at5zPgMeT",
+    youtube: "https://www.youtube.com/@soyfabiancanoni",
+    podcast: "https://www.youtube.com/playlist?list=PLbi8-tfecR-s",
     newsletter:
       "https://www.linkedin.com/newsletters/en-clave-pyme-7462332384512782336/",
   },
 } as const;
+
+/** Redes destacadas (hero, bloque “Seguime”, footer) */
+export const socialNetworks = [
+  {
+    id: "linkedin",
+    name: "LinkedIn",
+    href: siteConfig.social.linkedin,
+    blurb: "Ideas de negocio, finanzas y newsletter En Clave PyME.",
+    cta: "Seguir en LinkedIn",
+  },
+  {
+    id: "instagram",
+    name: "Instagram",
+    href: siteConfig.social.instagram,
+    blurb: "Detrás de escena, charlas y contenido para dueños de PyMEs.",
+    cta: "Seguir en Instagram",
+  },
+  {
+    id: "youtube",
+    name: "YouTube",
+    href: siteConfig.social.youtube,
+    blurb: "Podcast Off the Record y videos sobre decisiones y negocio.",
+    cta: "Ver canal",
+  },
+] as const;
 
 export const navLinks = [
   { href: "/sobre", label: "Sobre mí" },
   { href: "/servicios", label: "Cómo trabajo" },
   { href: "/en-clave-pyme", label: "Newsletter" },
   { href: "/off-the-record", label: "Podcast" },
+  { href: "/novedades", label: "Novedades" },
   { href: "/contacto", label: "Contacto" },
 ] as const;
 
@@ -147,9 +172,8 @@ export const podcast = {
   tagline: "Conversaciones más allá del discurso oficial.",
   description:
     "Negocios, decisiones y lo que pasa detrás de los números. Sin guion rígido. Sin pose.",
-  playlistId: "PLLrqHplVIBeEYR6AQCZHr1T6at5zPgMeT",
-  playlistUrl:
-    "https://www.youtube.com/playlist?list=PLLrqHplVIBeEYR6AQCZHr1T6at5zPgMeT",
+  playlistId: "PLbi8-tfecR-s",
+  playlistUrl: "https://www.youtube.com/playlist?list=PLbi8-tfecR-s",
   embedUrl:
-    "https://www.youtube.com/embed/videoseries?list=PLLrqHplVIBeEYR6AQCZHr1T6at5zPgMeT",
+    "https://www.youtube.com/embed/videoseries?list=PLbi8-tfecR-s",
 } as const;

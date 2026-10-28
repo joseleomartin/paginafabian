@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HeroMedia } from "@/components/hero/HeroMedia";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { services, siteConfig } from "@/lib/content";
@@ -18,9 +19,21 @@ export default function ServiciosPage() {
       <PageHero
         eyebrow="Cómo trabajo"
         title="Claridad financiera para dueños que deciden"
+        accent="deciden"
         lead="Acompañamiento en caja, costos, presupuesto y estrategia, con alguien que lee los números en clave de negocio."
-        image={images.stageTalk}
-      />
+        actions={
+          <>
+            <Link href="/contacto" className="btn btn-primary">
+              Contame tu caso
+            </Link>
+            <a href={`#${services[0].slug}`} className="btn btn-secondary">
+              Ver servicios
+            </a>
+          </>
+        }
+      >
+        <HeroMedia image={images.stageTalk} />
+      </PageHero>
 
       <section className="section">
         <div className="container">

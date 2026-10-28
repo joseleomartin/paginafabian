@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { HeroMedia } from "@/components/hero/HeroMedia";
 import { NovedadesList } from "@/components/NovedadesList";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { newsletter, siteConfig } from "@/lib/content";
 import { images } from "@/lib/images";
 import { getPublishedNovedades } from "@/lib/novedades";
+import { editionNumber } from "@/lib/novedades-merge";
+import { refreshNovedades } from "@/lib/sync-novedades";
 
 export const dynamic = "force-dynamic";
 
@@ -18,63 +20,68 @@ export const metadata: Metadata = {
 };
 
 export default async function NewsletterPage() {
-  const novedades = await getPublishedNovedades("newsletter");
+  // Trae solo lo nuevo del feed y lo guarda; la UI lee el archivo/Blob acumulado.
+  await refreshNovedades("newsletter");
+  const items = await getPublishedNovedades("newsletter");
+  const latest = items[0] ?? null;
+  const latestEdition = latest ? editionNumber(latest.title) : null;
 
   return (
     <>
       <PageHero
         eyebrow="Newsletter"
         title={newsletter.name}
+        accent="PyME"
         lead={newsletter.tagline}
-        videoEmbedUrl={newsletter.youtubeEmbedUrl}
-        videoTitle={newsletter.youtubeTitle}
-        darkVisual
-        frame="graphic"
-      />
-
-      <section className="section">
-        <div className="container split">
-          <Reveal>
-            <p>{newsletter.description}</p>
-            <p>
-              Cada edición abre una conversación que los dueños suelen
-              postergar: valuación, flujo de caja, eficiencia, competitividad y las
-              decisiones que definen el valor de una empresa.
-            </p>
-            <div className="btn-group">
+        actions={
+          <>
+            <a
+              href={siteConfig.social.newsletter}
+              className="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Suscribirme en LinkedIn
+            </a>
+            {latest ? (
               <a
-                href={siteConfig.social.newsletter}
-                className="btn btn-primary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Suscribirme en LinkedIn
-              </a>
-              <a
-                href={siteConfig.social.youtube}
+                href={latest.href}
                 className="btn btn-secondary"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Ver en YouTube
+                Leer última edición
               </a>
-            </div>
-            <p className="form-note mt-lg">
-              Video destacado: “{newsletter.youtubeTitle}”
-            </p>
-          </Reveal>
-          <Reveal delay={1}>
-            <div className="media-frame media-landscape">
-              <Image
-                src={images.stageGesture.src}
-                alt={images.stageGesture.alt}
-                width={images.stageGesture.width}
-                height={images.stageGesture.height}
-                sizes="(max-width: 900px) 100vw, 540px"
-                style={{
-                  objectFit: "cover",
-                  objectPosition: images.stageGesture.position,
-                }}
+            ) : null}
+          </>
+        }
+      >
+        {latest?.imageUrl ? (
+          <HeroMedia
+            image={{ src: latest.imageUrl, alt: latest.title, position: "50% 50%" }}
+            variant="cover"
+            aspectRatio="1.91 / 1"
+            href={latest.href}
+            label={latestEdition ? `Edición #${latestEdition}` : "Última edición"}
+            title="Leer en LinkedIn"
+          />
+        ) : (
+          <HeroMedia image={images.newsletter} variant="cover" aspectRatio="1114 / 627" />
+        )}
+      </PageHero>
+
+      <section className="section-tight">
+        <div className="container newsletter-intro">
+          <Reveal>
+            <p className="lead">{newsletter.description}</p>
+            <div className="video-embed">
+              <iframe
+                src={newsletter.youtubeEmbedUrl}
+                title={newsletter.youtubeTitle}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
           </Reveal>
@@ -82,9 +89,10 @@ export default async function NewsletterPage() {
       </section>
 
       <NovedadesList
-        items={novedades}
+        items={items}
         eyebrow="Novedades"
         title="Últimas ediciones"
+        variant="cards"
       />
 
       <section className="section-ink quote-band">

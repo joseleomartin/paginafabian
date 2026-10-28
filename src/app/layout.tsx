@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
-import { Newsreader, Sora } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { siteConfig } from "@/lib/content";
 import "./globals.css";
 
-const newsreader = Newsreader({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-newsreader",
+  variable: "--font-playfair",
   display: "swap",
   style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const sora = Sora({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sora",
+  variable: "--font-inter",
   display: "swap",
   weight: ["300", "400", "500", "600"],
 });
@@ -79,17 +80,18 @@ export default function RootLayout({
     sameAs: [
       siteConfig.social.linkedin,
       siteConfig.social.instagram,
+      siteConfig.social.youtube,
     ],
     description: siteConfig.description,
   };
 
   return (
-    <html lang="es" className={`${newsreader.variable} ${sora.variable}`}>
+    <html lang="es" className={`${playfair.variable} ${inter.variable}`}>
       <head>
         <style>{`
           :root {
-            --font-display: var(--font-newsreader), Georgia, serif;
-            --font-sans: var(--font-sora), system-ui, sans-serif;
+            --font-display: var(--font-playfair), Georgia, serif;
+            --font-sans: var(--font-inter), system-ui, sans-serif;
           }
         `}</style>
         <script

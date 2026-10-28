@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { HeroMedia } from "@/components/hero/HeroMedia";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { about, siteConfig } from "@/lib/content";
@@ -19,10 +20,21 @@ export default function SobrePage() {
       <PageHero
         eyebrow="Sobre mí"
         title="Hola, soy Fabián"
+        accent="Fabián"
         lead={about.intro}
-        image={images.portraitGesture}
-        frame="portrait"
-      />
+        actions={
+          <>
+            <Link href="/contacto" className="btn btn-primary">
+              Conversemos
+            </Link>
+            <Link href="/servicios" className="btn btn-secondary">
+              Cómo trabajo
+            </Link>
+          </>
+        }
+      >
+        <HeroMedia image={images.portraitGesture} />
+      </PageHero>
 
       <section className="section">
         <div className="container intro-grid intro-grid--story">

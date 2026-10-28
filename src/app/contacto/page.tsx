@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/ContactForm";
+import { HeroMedia } from "@/components/hero/HeroMedia";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { siteConfig } from "@/lib/content";
@@ -20,12 +21,18 @@ export default function ContactoPage() {
       <PageHero
         eyebrow="Contacto"
         title="Empecemos por una conversación"
+        accent="conversación"
         lead="Contame dónde está tu empresa hoy y qué decisión necesitás tomar con más claridad."
-        image={images.portraitSpeakAlt}
-        frame="portrait"
-      />
+        actions={
+          <a href="#formulario" className="btn btn-primary">
+            Escribir por formulario
+          </a>
+        }
+      >
+        <HeroMedia image={images.portraitSpeakAlt} />
+      </PageHero>
 
-      <section className="section">
+      <section id="formulario" className="section">
         <div className="container contact-grid">
           <Reveal>
             <h2>Escribime</h2>
