@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
+  completeEditionNumbers,
   editionNumber,
   fingerprint,
   mergeNew,
@@ -129,5 +130,57 @@ describe("mergeNew", () => {
     const result = mergeNew(existing, []);
     assert.equal(result.changed, false);
     assert.equal(result.items, existing);
+  });
+});
+
+describe("completeEditionNumbers", () => {
+  it("incluye solo newsletters numerados que ya tienen portada", () => {
+    const items = [
+      newsletter({ title: "#30. Con portada", imageUrl: "/images/newsletter/ed-30.jpg" }),
+      newsletter({ title: "#29. Sin portada", imageUrl: undefined }),
+      newsletter({ title: "Sin número", imageUrl: "/x.png" }),
+      episode({ title: "#7. Episodio", imageUrl: "/y.png" }),
+    ];
+    assert.deepEqual([...completeEditionNumbers(items)], [30]);
+  });
+
+  it("devuelve un conjunto vacío si no hay items", () => {
+    assert.equal(completeEditionNumbers([]).size, 0);
+  });
+});
+
+describe("mergeNew con el archivo histórico", () => {
+  const archived = newsletter({
+    id: "li-22-x",
+    title: "#22. Histórica",
+    href: "https://www.linkedin.com/pulse/22-x",
+    imageUrl: "/images/newsletter/ed-22.png",
+    summary: "Resumen curado",
+  });
+
+  it("agrega las ediciones históricas que faltan en el store", () => {
+    const result = mergeNew([newsletter()], [archived]);
+    assert.equal(result.added, 1);
+    assert.equal(result.items.length, 2);
+  });
+
+  it("completa la portada de una edición guardada sin imagen, sin pisar su fecha", () => {
+    const stored = newsletter({
+      id: "li-22-y",
+      title: "#22. Histórica",
+      href: "https://www.linkedin.com/pulse/22-y",
+      date: "2026-09-20",
+      imageUrl: undefined,
+    });
+    const result = mergeNew([stored], [archived]);
+    const merged = result.items.find((item) => item.id === "li-22-y");
+    assert.equal(result.added, 0);
+    assert.equal(merged.imageUrl, "/images/newsletter/ed-22.png");
+    assert.equal(merged.date, "2026-09-20");
+  });
+
+  it("no marca cambios si el store ya está completo", () => {
+    const result = mergeNew([archived], [archived]);
+    assert.equal(result.changed, false);
   });
 });

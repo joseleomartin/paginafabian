@@ -1,6 +1,11 @@
 import { podcast } from "@/lib/content";
 import { getNewsletterEditions } from "@/lib/linkedin-newsletter";
-import { mergeNew } from "@/lib/novedades-merge";
+import { archivedNovedades } from "@/lib/novedades-archive";
+import {
+  completeEditionNumbers,
+  mergeNew,
+  type MergeResult,
+} from "@/lib/novedades-merge";
 import {
   getNovedades,
   saveNovedades,
@@ -81,45 +86,59 @@ async function persistIfChanged(
   return merged.added;
 }
 
+/** Une dos resultados de merge consecutivos sobre el mismo store. */
+function chainMerges(first: MergeResult, second: MergeResult): MergeResult {
+  return {
+    items: second.items,
+    added: first.added + second.added,
+    changed: first.changed || second.changed,
+  };
+}
+
+/**
+ * Completa el store con el archivo histórico y luego pide a LinkedIn solo lo
+ * que no tenemos completo (ediciones nuevas o sin portada).
+ */
+async function mergeNewsletterSources(
+  existing: Novedad[]
+): Promise<MergeResult> {
+  const seeded = mergeNew(existing, archivedNovedades("newsletter"));
+  const editions = await getNewsletterEditions(
+    undefined,
+    completeEditionNumbers(seeded.items)
+  );
+  return chainMerges(
+    seeded,
+    mergeNew(seeded.items, editions.map(editionToNovedad))
+  );
+}
+
+/** Completa el store con el archivo histórico y suma los episodios más recientes. */
+async function mergePodcastSources(existing: Novedad[]): Promise<MergeResult> {
+  const seeded = mergeNew(existing, archivedNovedades("podcast"));
+  const videos = await getPlaylistVideos(podcast.playlistId, 25);
+  return chainMerges(seeded, mergeNew(seeded.items, videos.map(videoToNovedad)));
+}
+
 /** Trae ediciones de LinkedIn y guarda solo lo nuevo. */
 export function syncNewsletterNovedades(): Promise<number> {
-  return runExclusive(async () => {
-    const existing = await getNovedades();
-    const incoming = (await getNewsletterEditions()).map(editionToNovedad);
-    if (incoming.length === 0) return 0;
-    return persistIfChanged(mergeNew(existing, incoming));
-  });
+  return runExclusive(async () =>
+    persistIfChanged(await mergeNewsletterSources(await getNovedades()))
+  );
 }
 
 /** Trae episodios de YouTube y guarda solo lo nuevo. */
 export function syncPodcastNovedades(): Promise<number> {
-  return runExclusive(async () => {
-    const existing = await getNovedades();
-    const incoming = (await getPlaylistVideos(podcast.playlistId, 25)).map(
-      videoToNovedad
-    );
-    if (incoming.length === 0) return 0;
-    return persistIfChanged(mergeNew(existing, incoming));
-  });
+  return runExclusive(async () =>
+    persistIfChanged(await mergePodcastSources(await getNovedades()))
+  );
 }
 
 /** Sync completo (cron / endpoint protegido). Lanza si falla. */
 export function syncAllNovedades(): Promise<SyncResult> {
   return runExclusive(async () => {
-    const existing = await getNovedades();
-    const [editions, videos] = await Promise.all([
-      getNewsletterEditions(),
-      getPlaylistVideos(podcast.playlistId, 25),
-    ]);
-
-    const afterNewsletter = mergeNew(
-      existing,
-      editions.map(editionToNovedad)
-    );
-    const afterPodcast = mergeNew(
-      afterNewsletter.items,
-      videos.map(videoToNovedad)
-    );
+    const afterNewsletter = await mergeNewsletterSources(await getNovedades());
+    const afterPodcast = await mergePodcastSources(afterNewsletter.items);
 
     if (afterNewsletter.changed || afterPodcast.changed) {
       await saveNovedades(afterPodcast.items);

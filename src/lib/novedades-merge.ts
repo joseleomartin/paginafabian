@@ -21,6 +21,22 @@ export function editionNumber(title: string): number | null {
   return match ? Number.parseInt(match[1], 10) : null;
 }
 
+/**
+ * Números de edición ya guardados con portada. El sync no vuelve a consultar
+ * LinkedIn por ellas: solo busca ediciones nuevas o con datos incompletos.
+ */
+export function completeEditionNumbers(
+  items: ReadonlyArray<Pick<Novedad, "type" | "title" | "imageUrl">>
+): Set<number> {
+  const complete = new Set<number>();
+  for (const item of items) {
+    if (item.type !== "newsletter" || !item.imageUrl) continue;
+    const edition = editionNumber(item.title);
+    if (edition !== null) complete.add(edition);
+  }
+  return complete;
+}
+
 /** Clave estable para detectar duplicados entre fuentes. */
 export function fingerprint(
   item: Pick<Novedad, "id" | "href" | "type" | "title" | "youtubeId">

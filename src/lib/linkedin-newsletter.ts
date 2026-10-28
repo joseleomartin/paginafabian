@@ -171,7 +171,9 @@ async function fetchArticleMeta(url: string): Promise<ArticleMeta> {
 }
 
 /** Completa con lo que LinkedIn muestra en la landing pública (a veces más que el RSS). */
-async function fetchFromNewsletterPage(): Promise<NewsletterEdition[]> {
+async function fetchFromNewsletterPage(
+  skipEditions: ReadonlySet<number>
+): Promise<NewsletterEdition[]> {
   try {
     const response = await fetch(NEWSLETTER_PAGE, {
       cache: "no-store",
@@ -205,7 +207,7 @@ async function fetchFromNewsletterPage(): Promise<NewsletterEdition[]> {
       const rest = match[2].replace(/\s+/g, " ").trim();
       const title = `#${num}. ${rest}`.replace(/\s+$/g, "");
       const key = `n:${num}`;
-      if (seen.has(key)) continue;
+      if (seen.has(key) || skipEditions.has(Number.parseInt(num, 10))) continue;
 
       const linkMatch = pulseLinks.find((link) =>
         decodeURIComponent(link[1]).startsWith(`${num}-`)
@@ -280,14 +282,17 @@ function mergeEditions(
  * Todas las ediciones que LinkedIn expone en público.
  * Nota: LinkedIn no publica el archivo completo (#1–#N) sin login/API;
  * el feed + landing suelen traer solo las más recientes.
+ *
+ * `skipEditions`: ediciones ya guardadas completas; no se consulta su página.
  */
 export async function getNewsletterEditions(
-  limit = 100
+  limit = 100,
+  skipEditions: ReadonlySet<number> = new Set()
 ): Promise<NewsletterEdition[]> {
   try {
     const [rss, page] = await Promise.all([
       fetchFromRss(),
-      fetchFromNewsletterPage(),
+      fetchFromNewsletterPage(skipEditions),
     ]);
     const merged = mergeEditions(rss, page);
     return merged.slice(0, Math.max(limit, 1));

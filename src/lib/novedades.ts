@@ -60,6 +60,9 @@ function normalize(items: unknown): Novedad[] {
   );
 }
 
+/** Valida y ordena novedades de una fuente externa (JSON del archivo, Blob). */
+export const normalizeNovedades = normalize;
+
 async function readFromFile(): Promise<Novedad[]> {
   try {
     const raw = await fs.readFile(DATA_PATH, "utf8");
