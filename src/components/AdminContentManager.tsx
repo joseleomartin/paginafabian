@@ -175,7 +175,8 @@ export function AdminContentManager({ onUnauthorized }: Props) {
       }
       if (editingId === id) resetForm();
       setMessage("Contenido eliminado.");
-      await loadItems();
+      // El servidor ya confirmó el borrado: se refleja al instante, sin volver a leer.
+      setItems((current) => current.filter((entry) => entry.id !== id));
     } finally {
       setBusy(false);
     }

@@ -196,7 +196,8 @@ export function AdminNoticiasManager({ onUnauthorized }: Props) {
       }
       if (editingId === item.id) resetForm();
       setMessage("Novedad eliminada.");
-      await loadItems();
+      // El servidor ya confirmó el borrado: se refleja al instante, sin volver a leer.
+      setItems((current) => current.filter((entry) => entry.id !== item.id));
     } finally {
       setBusy(false);
     }

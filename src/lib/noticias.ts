@@ -1,6 +1,7 @@
 import { list, put } from "@vercel/blob";
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { BLOB_JSON_CACHE_SECONDS, versionedBlobUrl } from "@/lib/blob-url";
 import {
   normalizeNoticias,
   sortNoticias,
@@ -37,7 +38,10 @@ async function readFromBlob(): Promise<Noticia[] | null> {
     const { blobs } = await list({ prefix: BLOB_PATHNAME, limit: 1 });
     const blob = blobs.find((entry) => entry.pathname === BLOB_PATHNAME);
     if (!blob) return null;
-    const response = await fetch(blob.url, { cache: "no-store" });
+    // URL versionada: evita que la CDN devuelva el JSON anterior tras guardar o borrar.
+    const response = await fetch(versionedBlobUrl(blob.url, blob.uploadedAt), {
+      cache: "no-store",
+    });
     if (!response.ok) return null;
     return normalizeNoticias(await response.json());
   } catch (error) {
@@ -54,6 +58,7 @@ async function writeList(items: Noticia[]): Promise<void> {
       contentType: "application/json",
       addRandomSuffix: false,
       allowOverwrite: true,
+      cacheControlMaxAge: BLOB_JSON_CACHE_SECONDS,
     });
     return;
   }

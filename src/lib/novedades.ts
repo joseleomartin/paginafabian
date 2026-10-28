@@ -1,4 +1,5 @@
 import { put, list } from "@vercel/blob";
+import { BLOB_JSON_CACHE_SECONDS, versionedBlobUrl } from "@/lib/blob-url";
 import { promises as fs } from "fs";
 import path from "path";
 import { assertWritable } from "@/lib/uploads";
@@ -98,7 +99,10 @@ async function readFromBlob(): Promise<Novedad[] | null> {
     const { blobs } = await list({ prefix: BLOB_PATHNAME, limit: 1 });
     const blob = blobs.find((b) => b.pathname === BLOB_PATHNAME);
     if (!blob) return null;
-    const res = await fetch(blob.url, { cache: "no-store" });
+    // URL versionada: evita que la CDN devuelva el JSON anterior tras guardar o borrar.
+    const res = await fetch(versionedBlobUrl(blob.url, blob.uploadedAt), {
+      cache: "no-store",
+    });
     if (!res.ok) return null;
     return normalize(await res.json());
   } catch (error) {
@@ -113,6 +117,7 @@ async function writeToBlob(items: Novedad[]): Promise<void> {
     contentType: "application/json",
     addRandomSuffix: false,
     allowOverwrite: true,
+    cacheControlMaxAge: BLOB_JSON_CACHE_SECONDS,
   });
 }
 
