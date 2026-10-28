@@ -105,7 +105,7 @@ export const images = {
     position: "72% 35%",
   },
 
-  /** Newsletter body */
+  /** Newsletter hero */
   stageGesture: {
     src: "/images/stage-gesture.jpg",
     alt: "Fabián Canoni presentando sobre planificación financiera",

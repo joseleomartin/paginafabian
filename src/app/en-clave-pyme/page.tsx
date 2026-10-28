@@ -7,7 +7,6 @@ import { Reveal } from "@/components/Reveal";
 import { newsletter, siteConfig } from "@/lib/content";
 import { images } from "@/lib/images";
 import { getPublishedNovedades } from "@/lib/novedades";
-import { editionNumber } from "@/lib/novedades-merge";
 import { refreshNovedades } from "@/lib/sync-novedades";
 
 export const dynamic = "force-dynamic";
@@ -24,7 +23,6 @@ export default async function NewsletterPage() {
   await refreshNovedades("newsletter");
   const items = await getPublishedNovedades("newsletter");
   const latest = items[0] ?? null;
-  const latestEdition = latest ? editionNumber(latest.title) : null;
 
   return (
     <>
@@ -56,18 +54,7 @@ export default async function NewsletterPage() {
           </>
         }
       >
-        {latest?.imageUrl ? (
-          <HeroMedia
-            image={{ src: latest.imageUrl, alt: latest.title, position: "50% 50%" }}
-            variant="cover"
-            aspectRatio="1.91 / 1"
-            href={latest.href}
-            label={latestEdition ? `Edición #${latestEdition}` : "Última edición"}
-            title="Leer en LinkedIn"
-          />
-        ) : (
-          <HeroMedia image={images.newsletter} variant="cover" aspectRatio="1114 / 627" />
-        )}
+        <HeroMedia image={images.stageGesture} />
       </PageHero>
 
       <section className="section-tight">

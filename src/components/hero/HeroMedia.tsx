@@ -13,10 +13,9 @@ type Props = {
   /**
    * photo: foto de persona a sangre en la mitad derecha del hero (en móvil, tarjeta).
    * card: pieza con texto propio (portada, miniatura) que no debe recortarse.
-   * cover: como card, pero sobre un panel oscuro que ocupa la mitad derecha del hero.
    */
-  variant?: "photo" | "card" | "cover";
-  /** Proporción CSS de las variantes card y cover (p. ej. "16 / 9"). */
+  variant?: "photo" | "card";
+  /** Proporción CSS de la variante card (p. ej. "16 / 9"). */
   aspectRatio?: string;
   /** Si se indica, la imagen es un enlace externo. */
   href?: string;
