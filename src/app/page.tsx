@@ -12,13 +12,11 @@ import {
 } from "@/lib/content";
 import { images } from "@/lib/images";
 import { getPublishedNovedades } from "@/lib/novedades";
-import { refreshNovedades } from "@/lib/sync-novedades";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  await refreshNovedades("newsletter", "podcast");
-
+  // Sync de fuentes: cron `/api/novedades/sync` (no en cada visita: quema Blob Advanced Ops).
   const [newsletterItems, podcastItems] = await Promise.all([
     getPublishedNovedades("newsletter"),
     getPublishedNovedades("podcast"),
@@ -33,6 +31,7 @@ export default async function HomePage() {
             alt={images.hero.alt}
             fill
             priority
+            fetchPriority="high"
             sizes="(max-width: 900px) 100vw, 58vw"
             style={{
               objectFit: "cover",
@@ -80,7 +79,8 @@ export default async function HomePage() {
                 alt={images.portraitWarm.alt}
                 width={images.portraitWarm.width}
                 height={images.portraitWarm.height}
-                sizes="(max-width: 900px) 92vw, 420px"
+                sizes="(max-width: 900px) 368px, 420px"
+                quality={70}
                 style={{
                   objectFit: "cover",
                   objectPosition: images.portraitWarm.position,

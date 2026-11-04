@@ -7,7 +7,6 @@ import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { podcast, siteConfig } from "@/lib/content";
 import { formatDate } from "@/lib/format-date";
 import { getPublishedNovedades } from "@/lib/novedades";
-import { refreshNovedades } from "@/lib/sync-novedades";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PodcastPage() {
-  await refreshNovedades("podcast");
+  // Sync: cron `/api/novedades/sync`. Acá solo se lee el store (cacheado).
   const episodios = await getPublishedNovedades("podcast");
   const latest = episodios[0] ?? null;
   const embedSrc = latest?.youtubeId
@@ -42,7 +41,9 @@ export default async function PodcastPage() {
         accent="Record"
         lead={podcast.tagline}
         mediaShape="wide"
-        media={<YouTubeEmbed src={embedSrc} title={embedTitle} shape="wide" />}
+        media={
+          <YouTubeEmbed src={embedSrc} title={embedTitle} shape="wide" priority />
+        }
       >
         {latest ? (
           <>

@@ -77,7 +77,8 @@ export function NovedadesList({
                           src={imageSrc}
                           alt=""
                           fill
-                          sizes="(max-width: 700px) 100vw, 33vw"
+                          sizes="(max-width: 700px) 366px, (max-width: 1100px) 33vw, 360px"
+                          quality={70}
                           className="content-card-img"
                         />
                       ) : (

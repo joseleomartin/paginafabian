@@ -1,7 +1,6 @@
-import { list, put } from "@vercel/blob";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { BLOB_JSON_CACHE_SECONDS, versionedBlobUrl } from "@/lib/blob-url";
+import { readBlobJson, writeBlobJson } from "@/lib/blob-json";
 import {
   normalizeNoticias,
   sortNoticias,
@@ -34,37 +33,24 @@ async function readFromFile(): Promise<Noticia[]> {
 }
 
 async function readFromBlob(): Promise<Noticia[] | null> {
-  try {
-    const { blobs } = await list({ prefix: BLOB_PATHNAME, limit: 1 });
-    const blob = blobs.find((entry) => entry.pathname === BLOB_PATHNAME);
-    if (!blob) return null;
-    // URL versionada: evita que la CDN devuelva el JSON anterior tras guardar o borrar.
-    const response = await fetch(versionedBlobUrl(blob.url, blob.uploadedAt), {
-      cache: "no-store",
-    });
-    if (!response.ok) return null;
-    return normalizeNoticias(await response.json());
-  } catch (error) {
-    console.error("[noticias] no se pudo leer el Blob", error);
-    return null;
-  }
+  const raw = await readBlobJson(BLOB_PATHNAME);
+  if (raw === null) return null;
+  return normalizeNoticias(raw);
 }
 
 async function writeList(items: Noticia[]): Promise<void> {
-  const payload = `${JSON.stringify(sortNoticias(items), null, 2)}\n`;
+  const sorted = sortNoticias(items);
   if (hasBlobStorage()) {
-    await put(BLOB_PATHNAME, payload, {
-      access: "public",
-      contentType: "application/json",
-      addRandomSuffix: false,
-      allowOverwrite: true,
-      cacheControlMaxAge: BLOB_JSON_CACHE_SECONDS,
-    });
+    await writeBlobJson(BLOB_PATHNAME, sorted);
     return;
   }
   assertWritable();
   await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
-  await fs.writeFile(DATA_PATH, payload, "utf8");
+  await fs.writeFile(
+    DATA_PATH,
+    `${JSON.stringify(sorted, null, 2)}\n`,
+    "utf8"
+  );
 }
 
 export async function getNoticias(): Promise<Noticia[]> {

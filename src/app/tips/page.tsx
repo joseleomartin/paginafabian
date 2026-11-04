@@ -3,12 +3,15 @@ import Link from "next/link";
 import { FeatureSplit } from "@/components/FeatureSplit";
 import { Reveal } from "@/components/Reveal";
 import { TipsGrid, type TipCard } from "@/components/TipsGrid";
-import { YouTubeEmbed, youtubeEmbedUrl } from "@/components/YouTubeEmbed";
+import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { siteConfig, tips } from "@/lib/content";
 import { formatDate } from "@/lib/format-date";
 import { getPublishedNovedades, type Novedad } from "@/lib/novedades";
-import { refreshNovedades } from "@/lib/sync-novedades";
-import { cleanVideoTitle, youtubeThumbnailUrl } from "@/lib/video-novedad";
+import {
+  cleanVideoTitle,
+  youtubeEmbedUrl,
+  youtubeThumbnailUrl,
+} from "@/lib/video-novedad";
 
 export const dynamic = "force-dynamic";
 
@@ -43,8 +46,7 @@ function toTipCard(item: Novedad): TipCard {
 }
 
 export default async function TipsPage() {
-  // Trae solo lo nuevo de la playlist y lo guarda; la UI lee el store acumulado.
-  await refreshNovedades("tips");
+  // Sync: cron `/api/novedades/sync`. Acá solo se lee el store (cacheado).
   const items = await getPublishedNovedades("tip");
   const latest = items[0] ?? null;
   const cards = items.map(toTipCard).filter((card) => card.imageUrl);
@@ -63,6 +65,7 @@ export default async function TipsPage() {
               src={youtubeEmbedUrl(latest.youtubeId)}
               title={`${cleanVideoTitle(latest.title)} — ${tips.name}`}
               shape="vertical"
+              priority
             />
           ) : null
         }

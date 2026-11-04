@@ -6,7 +6,6 @@ import { Reveal } from "@/components/Reveal";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { newsletter, siteConfig } from "@/lib/content";
 import { getPublishedNovedades } from "@/lib/novedades";
-import { refreshNovedades } from "@/lib/sync-novedades";
 
 export const dynamic = "force-dynamic";
 
@@ -18,8 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function NewsletterPage() {
-  // Trae solo lo nuevo del feed y lo guarda; la UI lee el archivo/Blob acumulado.
-  await refreshNovedades("newsletter");
+  // Sync: cron `/api/novedades/sync`. Acá solo se lee el store (cacheado).
   const items = await getPublishedNovedades("newsletter");
   const latest = items[0] ?? null;
 
@@ -36,6 +34,7 @@ export default async function NewsletterPage() {
             src={newsletter.youtubeEmbedUrl}
             title={newsletter.youtubeTitle}
             shape="wide"
+            priority
           />
         }
       >

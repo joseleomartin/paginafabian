@@ -36,6 +36,10 @@ export function youtubeThumbnailUrl(
   return `https://i.ytimg.com/vi/${videoId}/${variant}.jpg`;
 }
 
+export function youtubeEmbedUrl(videoId: string): string {
+  return `https://www.youtube.com/embed/${videoId}`;
+}
+
 export function videoToNovedad(
   video: PlaylistEntry,
   source: VideoSource

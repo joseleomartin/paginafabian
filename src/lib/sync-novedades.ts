@@ -188,9 +188,9 @@ const syncers: Record<SyncScope, () => Promise<number>> = {
 };
 
 /**
- * Sync "best effort" para páginas públicas: nunca lanza y está limitado en
- * frecuencia. Si la fuente o el almacenamiento fallan, la página sigue
- * mostrando lo ya guardado.
+ * Sync "best effort" acotado en frecuencia. Las páginas públicas ya no lo
+ * llaman (quema Blob Advanced Ops); queda para admin/manual. El cron usa
+ * `syncAllNovedades`.
  */
 export async function refreshNovedades(
   ...scopes: SyncScope[]

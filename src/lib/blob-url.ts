@@ -1,15 +1,9 @@
 /**
- * Lectura consistente de JSON guardados en Vercel Blob.
+ * Helpers de URL para Blobs públicos.
  *
- * Los blobs se sirven por CDN. Aunque el archivo se sobrescriba, la URL pública
- * puede devolver la versión anterior hasta que expire el cache, y `cache: "no-store"`
- * de `fetch` solo evita el cache de Next, no el de la CDN. Eso hacía que, tras
- * guardar o borrar, el panel mostrara datos viejos y hasta se pudiera reescribir
- * un contenido ya eliminado.
- *
- * Solución: versionar la URL con la fecha de subida. `list()` consulta la API
- * (no la CDN), así que `uploadedAt` es siempre el de la última escritura y la
- * URL cambia exactamente cuando cambia el contenido.
+ * La lectura de JSON del sitio usa `get(pathname)` + cache en memoria
+ * (`blob-json.ts`), no `list()` (Advanced Op). Este módulo sigue disponible
+ * para versionar URLs cuando hace falta invalidar CDN a mano.
  *
  * Módulo puro (sin I/O) para poder testearlo con `node --test`.
  */

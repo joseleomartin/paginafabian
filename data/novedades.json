@@ -1,5 +1,16 @@
 [
   {
+    "id": "li-31-la-plata-en-cuenta-corriente-también-te-miente-fabián-canoni-pzcvf",
+    "type": "newsletter",
+    "title": "#31. La plata en la cuenta corriente, también te miente.",
+    "summary": "Rentabilidad y liquidez, desde el lado que casi nadie mira. Cada vez que alguien habla de rentabilidad versus liquidez, cuenta la misma historia: la empresa que gana plata y no tiene un peso para pagar los sueldos. Esa m",
+    "date": "2026-11-01",
+    "href": "https://es.linkedin.com/pulse/31-la-plata-en-cuenta-corriente-tambi%C3%A9n-te-miente-fabi%C3%A1n-canoni-pzcvf",
+    "imageUrl": "https://linkedinrss.cns.me/img/aHR0cHM6Ly9tZWRpYS5saWNkbi5jb20vZG1zL2ltYWdlL3YyL0Q0RDEyQVFGWXowZVc1S3d3WkEvYXJ0aWNsZS1jb3Zlcl9pbWFnZS1zaHJpbmtfNzIwXzEyODAvQjREYUdXMHJWeUtrQVEtLzAvMTc5MzUzMTc1NDA2OT9lPTIxNDc0ODM2NDcmdj1iZXRhJnQ9b0FwRldSVE9paG11YTJFdFBBTjBoVWxMMGdUSnUtX1BDOUpzMVIyN085MA",
+    "badge": "En Clave PyME",
+    "published": true
+  },
+  {
     "id": "li-30-en-una-empresa-de-servicios-tu-stock-es-el-tiempo-y-fabián-canoni-otkpf",
     "type": "newsletter",
     "title": "#30. En una empresa de servicios, tu stock es el tiempo. Y vence todos los días.",
@@ -378,6 +389,30 @@
     "published": true
   },
   {
+    "id": "yt-sHsmQKHtPJo",
+    "type": "tip",
+    "title": "ARCA: Gracias por nada.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-08-04",
+    "href": "https://www.youtube.com/shorts/sHsmQKHtPJo",
+    "youtubeId": "sHsmQKHtPJo",
+    "imageUrl": "https://i.ytimg.com/vi/sHsmQKHtPJo/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-KCdUyr4qVQ0",
+    "type": "tip",
+    "title": "IA: Primero el Proceso.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-08-04",
+    "href": "https://www.youtube.com/shorts/KCdUyr4qVQ0",
+    "youtubeId": "KCdUyr4qVQ0",
+    "imageUrl": "https://i.ytimg.com/vi/KCdUyr4qVQ0/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
     "id": "li-la-forma-más-cara-de-financiarte-es-que-usás-siempre-fabián-canoni-dp2sf",
     "type": "newsletter",
     "title": "#12. La forma más cara de financiarte es la que usás siempre.",
@@ -386,6 +421,18 @@
     "href": "https://www.linkedin.com/pulse/la-forma-m%C3%A1s-cara-de-financiarte-es-que-us%C3%A1s-siempre-fabi%C3%A1n-canoni-dp2sf",
     "imageUrl": "/images/newsletter/ed-12.png",
     "badge": "En Clave PyME",
+    "published": true
+  },
+  {
+    "id": "yt-Qb8oIRLacB8",
+    "type": "tip",
+    "title": "Falta Financiamiento Privado.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-07-30",
+    "href": "https://www.youtube.com/shorts/Qb8oIRLacB8",
+    "youtubeId": "Qb8oIRLacB8",
+    "imageUrl": "https://i.ytimg.com/vi/Qb8oIRLacB8/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
     "published": true
   },
   {
@@ -435,6 +482,30 @@
     "published": true
   },
   {
+    "id": "yt-QZ5W33sTX74",
+    "type": "tip",
+    "title": "¿Qué son las S.G.R.?",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-07-13",
+    "href": "https://www.youtube.com/shorts/QZ5W33sTX74",
+    "youtubeId": "QZ5W33sTX74",
+    "imageUrl": "https://i.ytimg.com/vi/QZ5W33sTX74/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
+    "id": "yt-LgBoK1o7w3s",
+    "type": "tip",
+    "title": "Más del 70% de los empresarios PyME´s aún no está planificando su retiro.",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-07-13",
+    "href": "https://www.youtube.com/shorts/LgBoK1o7w3s",
+    "youtubeId": "LgBoK1o7w3s",
+    "imageUrl": "https://i.ytimg.com/vi/LgBoK1o7w3s/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
+    "published": true
+  },
+  {
     "id": "li-9-una-empresa-familiar-se-hereda-planifica-fabián-canoni-5fgbf",
     "type": "newsletter",
     "title": "#9. Una empresa familiar no se hereda. Se planifica.",
@@ -467,6 +538,18 @@
     "youtubeId": "HJd21DxdO68",
     "imageUrl": "https://i.ytimg.com/vi/HJd21DxdO68/hqdefault.jpg",
     "badge": "Off the Record",
+    "published": true
+  },
+  {
+    "id": "yt-G3H2UYsJtQY",
+    "type": "tip",
+    "title": "Una PyME que depende 100% de su dueño...VALE MENOS!!!",
+    "summary": "Tips y herramientas para PyMEs y emprendedores.",
+    "date": "2026-07-08",
+    "href": "https://www.youtube.com/shorts/G3H2UYsJtQY",
+    "youtubeId": "G3H2UYsJtQY",
+    "imageUrl": "https://i.ytimg.com/vi/G3H2UYsJtQY/maxresdefault.jpg",
+    "badge": "Tips PyMEs",
     "published": true
   },
   {
@@ -579,78 +662,6 @@
     "href": "https://www.linkedin.com/pulse/por-qu%C3%A9-dej%C3%A9-de-hablar-gesti%C3%B3n-financiera-fabi%C3%A1n-canoni-l76kf",
     "imageUrl": "/images/newsletter/ed-1.jpg",
     "badge": "En Clave PyME",
-    "published": true
-  },
-  {
-    "id": "yt-KCdUyr4qVQ0",
-    "type": "tip",
-    "title": "IA: Primero el Proceso.",
-    "summary": "Tips y herramientas para PyMEs y emprendedores.",
-    "date": "2026-08-04",
-    "href": "https://www.youtube.com/shorts/KCdUyr4qVQ0",
-    "youtubeId": "KCdUyr4qVQ0",
-    "imageUrl": "https://i.ytimg.com/vi/KCdUyr4qVQ0/maxresdefault.jpg",
-    "badge": "Tips PyMEs",
-    "published": true
-  },
-  {
-    "id": "yt-sHsmQKHtPJo",
-    "type": "tip",
-    "title": "ARCA: Gracias por nada.",
-    "summary": "Tips y herramientas para PyMEs y emprendedores.",
-    "date": "2026-08-04",
-    "href": "https://www.youtube.com/shorts/sHsmQKHtPJo",
-    "youtubeId": "sHsmQKHtPJo",
-    "imageUrl": "https://i.ytimg.com/vi/sHsmQKHtPJo/maxresdefault.jpg",
-    "badge": "Tips PyMEs",
-    "published": true
-  },
-  {
-    "id": "yt-Qb8oIRLacB8",
-    "type": "tip",
-    "title": "Falta Financiamiento Privado.",
-    "summary": "Tips y herramientas para PyMEs y emprendedores.",
-    "date": "2026-07-30",
-    "href": "https://www.youtube.com/shorts/Qb8oIRLacB8",
-    "youtubeId": "Qb8oIRLacB8",
-    "imageUrl": "https://i.ytimg.com/vi/Qb8oIRLacB8/maxresdefault.jpg",
-    "badge": "Tips PyMEs",
-    "published": true
-  },
-  {
-    "id": "yt-QZ5W33sTX74",
-    "type": "tip",
-    "title": "¿Qué son las S.G.R.?",
-    "summary": "Tips y herramientas para PyMEs y emprendedores.",
-    "date": "2026-07-13",
-    "href": "https://www.youtube.com/shorts/QZ5W33sTX74",
-    "youtubeId": "QZ5W33sTX74",
-    "imageUrl": "https://i.ytimg.com/vi/QZ5W33sTX74/maxresdefault.jpg",
-    "badge": "Tips PyMEs",
-    "published": true
-  },
-  {
-    "id": "yt-LgBoK1o7w3s",
-    "type": "tip",
-    "title": "Más del 70% de los empresarios PyME´s aún no está planificando su retiro.",
-    "summary": "Tips y herramientas para PyMEs y emprendedores.",
-    "date": "2026-07-13",
-    "href": "https://www.youtube.com/shorts/LgBoK1o7w3s",
-    "youtubeId": "LgBoK1o7w3s",
-    "imageUrl": "https://i.ytimg.com/vi/LgBoK1o7w3s/maxresdefault.jpg",
-    "badge": "Tips PyMEs",
-    "published": true
-  },
-  {
-    "id": "yt-G3H2UYsJtQY",
-    "type": "tip",
-    "title": "Una PyME que depende 100% de su dueño...VALE MENOS!!!",
-    "summary": "Tips y herramientas para PyMEs y emprendedores.",
-    "date": "2026-07-08",
-    "href": "https://www.youtube.com/shorts/G3H2UYsJtQY",
-    "youtubeId": "G3H2UYsJtQY",
-    "imageUrl": "https://i.ytimg.com/vi/G3H2UYsJtQY/maxresdefault.jpg",
-    "badge": "Tips PyMEs",
     "published": true
   }
 ]
