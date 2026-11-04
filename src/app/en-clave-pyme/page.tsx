@@ -7,7 +7,7 @@ import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { newsletter, siteConfig } from "@/lib/content";
 import { getPublishedNovedades } from "@/lib/novedades";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "En Clave PyME",

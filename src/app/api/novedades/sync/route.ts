@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+import { revalidatePublicContent } from "@/lib/revalidate-public";
 import { syncAllNovedades } from "@/lib/sync-novedades";
+
+export const maxDuration = 60;
 
 function authorize(request: Request): NextResponse | null {
   const secret = process.env.CRON_SECRET?.trim();
@@ -20,7 +23,7 @@ function authorize(request: Request): NextResponse | null {
 }
 
 /**
- * Sincroniza newsletter + podcast al store de novedades.
+ * Sincroniza newsletter + podcast + tips al store de novedades.
  * Requiere: Authorization: Bearer <CRON_SECRET>
  * En Vercel Cron, con CRON_SECRET en env, el header se envía solo.
  */
@@ -30,6 +33,7 @@ export async function POST(request: Request) {
 
   try {
     const result = await syncAllNovedades();
+    revalidatePublicContent();
     return NextResponse.json({
       ok: true,
       ...result,

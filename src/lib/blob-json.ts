@@ -4,6 +4,7 @@
  *
  * - Lectura: `get(pathname)` (Simple Op / CDN) + cache en memoria con ETag.
  * - Escritura: `put` (Advanced) solo cuando hay que persistir; actualiza el cache.
+ * - Timeout + stale: si Blob tarda o falla, se sirve lo cacheado (evita caídas en cold start).
  */
 import { get, put } from "@vercel/blob";
 import { BLOB_JSON_CACHE_SECONDS } from "@/lib/blob-url";
@@ -18,10 +19,31 @@ type CacheEntry = {
 /** Tiempo en el que se sirve desde memoria sin tocar Blob (0 ops). */
 const MEMORY_TTL_MS = 5 * 60 * 1000;
 
+/** Tope para no colgar la página en cold start / Blob lento. */
+const BLOB_READ_TIMEOUT_MS = 2500;
+
 const memory = new Map<string, CacheEntry>();
 
 async function streamToText(stream: ReadableStream<Uint8Array>): Promise<string> {
   return new Response(stream).text();
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(`Blob read timeout after ${ms}ms`));
+    }, ms);
+    promise.then(
+      (value) => {
+        clearTimeout(timer);
+        resolve(value);
+      },
+      (error: unknown) => {
+        clearTimeout(timer);
+        reject(error);
+      }
+    );
+  });
 }
 
 /**
@@ -37,20 +59,25 @@ export async function readBlobJson(pathname: string): Promise<unknown | null> {
   }
 
   try {
-    const result = await get(pathname, {
-      access: "public",
-      useCache: true,
-      ifNoneMatch: cached?.etag,
-    });
+    const result = await withTimeout(
+      get(pathname, {
+        access: "public",
+        useCache: true,
+        ifNoneMatch: cached?.etag,
+      }),
+      BLOB_READ_TIMEOUT_MS
+    );
 
-    if (!result) return null;
+    if (!result) return cached?.data ?? null;
 
     if (result.statusCode === 304 && cached) {
       cached.cachedAt = Date.now();
       return cached.data;
     }
 
-    if (result.statusCode !== 200 || !result.stream) return null;
+    if (result.statusCode !== 200 || !result.stream) {
+      return cached?.data ?? null;
+    }
 
     const data: unknown = JSON.parse(await streamToText(result.stream));
     memory.set(pathname, {
@@ -61,6 +88,8 @@ export async function readBlobJson(pathname: string): Promise<unknown | null> {
     return data;
   } catch (error) {
     console.error(`[blob-json] no se pudo leer ${pathname}`, error);
+    // Preferir dato stale a tumbar la página.
+    if (cached) return cached.data;
     return null;
   }
 }

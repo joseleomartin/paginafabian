@@ -4,6 +4,7 @@ import { errorResponse, handleApiError } from "@/lib/api-response";
 import { NoticiaNotFoundError, updateNoticias } from "@/lib/noticias";
 import type { Noticia } from "@/lib/noticias-model";
 import { parseNoticiaRequest } from "@/lib/noticias-request";
+import { revalidatePublicContent } from "@/lib/revalidate-public";
 import { deleteImage, saveImage } from "@/lib/uploads";
 
 export const dynamic = "force-dynamic";
@@ -36,6 +37,8 @@ export async function PUT(request: Request, { params }: Params) {
       };
     });
 
+    revalidatePublicContent();
+
     // Recién con la novedad guardada se descarta la imagen reemplazada o quitada.
     if (previousImageUrl && previousImageUrl !== updated.imageUrl) {
       await deleteImage(previousImageUrl);
@@ -62,6 +65,7 @@ export async function DELETE(_request: Request, { params }: Params) {
         result: existing,
       };
     });
+    revalidatePublicContent();
     await deleteImage(removed.imageUrl);
     return NextResponse.json({ ok: true });
   } catch (error) {

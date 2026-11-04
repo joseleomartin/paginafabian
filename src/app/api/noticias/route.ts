@@ -8,6 +8,7 @@ import {
 } from "@/lib/noticias";
 import { createNoticiaId, type Noticia } from "@/lib/noticias-model";
 import { parseNoticiaRequest } from "@/lib/noticias-request";
+import { revalidatePublicContent } from "@/lib/revalidate-public";
 import { deleteImage, saveImage } from "@/lib/uploads";
 
 export const dynamic = "force-dynamic";
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
       items: [noticia, ...current],
       result: noticia,
     }));
+    revalidatePublicContent();
     return NextResponse.json({ item: noticia }, { status: 201 });
   } catch (error) {
     // Evita dejar una imagen huérfana si no se pudo guardar la novedad.

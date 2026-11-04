@@ -3,6 +3,7 @@ import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { errorResponse, handleApiError } from "@/lib/api-response";
 import { getNovedades, saveNovedades, type Novedad } from "@/lib/novedades";
 import { parseNovedadRequest } from "@/lib/novedades-request";
+import { revalidatePublicContent } from "@/lib/revalidate-public";
 import { deleteImage, saveImage } from "@/lib/uploads";
 
 export const dynamic = "force-dynamic";
@@ -42,6 +43,7 @@ export async function PUT(request: Request, { params }: Params) {
     };
     items[index] = updated;
     await saveNovedades(items);
+    revalidatePublicContent();
 
     // Recién con el contenido guardado se descarta la imagen reemplazada.
     // deleteImage ignora covers del repo e imágenes externas.
@@ -67,6 +69,7 @@ export async function DELETE(_request: Request, { params }: Params) {
     if (!removed) return errorResponse("Contenido no encontrado.", 404);
 
     await saveNovedades(items.filter((item) => item.id !== id));
+    revalidatePublicContent();
     await deleteImage(removed.imageUrl);
     return NextResponse.json({ ok: true });
   } catch (error) {

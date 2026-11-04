@@ -8,7 +8,7 @@ import { siteConfig } from "@/lib/content";
 import { images } from "@/lib/images";
 import { getPublishedNoticias } from "@/lib/noticias";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 const description =
   "Prensa de Fabián Canoni: charlas, eventos, publicaciones y anuncios sobre finanzas para PyMEs.";

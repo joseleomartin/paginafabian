@@ -8,7 +8,7 @@ import { podcast, siteConfig } from "@/lib/content";
 import { formatDate } from "@/lib/format-date";
 import { getPublishedNovedades } from "@/lib/novedades";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Off the Record",

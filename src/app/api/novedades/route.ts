@@ -11,6 +11,7 @@ import {
   type NovedadType,
 } from "@/lib/novedades";
 import { parseNovedadRequest } from "@/lib/novedades-request";
+import { revalidatePublicContent } from "@/lib/revalidate-public";
 import { deleteImage, saveImage } from "@/lib/uploads";
 
 export const dynamic = "force-dynamic";
@@ -62,6 +63,7 @@ export async function POST(request: Request) {
     };
     const items = await getNovedades();
     await saveNovedades([next, ...items]);
+    revalidatePublicContent();
     return NextResponse.json({ item: next }, { status: 201 });
   } catch (error) {
     // Evita dejar una imagen huérfana si no se pudo guardar el contenido.

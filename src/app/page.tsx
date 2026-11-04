@@ -13,7 +13,8 @@ import {
 import { images } from "@/lib/images";
 import { getPublishedNovedades } from "@/lib/novedades";
 
-export const dynamic = "force-dynamic";
+/** ISR: evita cold start en cada visita; el cron invalida tras sync. */
+export const revalidate = 3600;
 
 export default async function HomePage() {
   // Sync de fuentes: cron `/api/novedades/sync` (no en cada visita: quema Blob Advanced Ops).

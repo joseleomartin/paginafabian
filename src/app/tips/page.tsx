@@ -13,7 +13,7 @@ import {
   youtubeThumbnailUrl,
 } from "@/lib/video-novedad";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: tips.name,
