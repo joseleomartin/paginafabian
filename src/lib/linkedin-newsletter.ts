@@ -221,8 +221,10 @@ async function fetchFromNewsletterPage(
 
     // La landing no trae fechas ni portadas: se leen de cada edición. Si no hay
     // fecha, se omite (se reintenta en el próximo sync) en vez de inventar "hoy".
+    // Tope bajo: el RSS ya trae lo reciente; demasiados fetch a LinkedIn tumba el cron.
+    const pending = candidates.slice(0, 5);
     const resolved = await Promise.all(
-      candidates.map(async (candidate) => ({
+      pending.map(async (candidate) => ({
         ...candidate,
         ...(await fetchArticleMeta(candidate.url)),
       }))

@@ -155,22 +155,59 @@ export function syncTipsNovedades(): Promise<number> {
   );
 }
 
-/** Sync completo (cron / endpoint protegido). Lanza si falla. */
+/**
+ * Sync completo (cron / endpoint protegido).
+ * Cada fuente se guarda al terminar: si YouTube se cuelga, la newsletter
+ * ya quedó persistida (antes un fallo al final descartaba todo).
+ */
 export function syncAllNovedades(): Promise<SyncResult> {
   return runExclusive(async () => {
-    const afterNewsletter = await mergeNewsletterSources(await getNovedades());
-    const afterPodcast = await mergeVideoSources(afterNewsletter.items, "podcast");
-    const afterTips = await mergeVideoSources(afterPodcast.items, "tip");
+    let newsletterAdded = 0;
+    let podcastAdded = 0;
+    let tipsAdded = 0;
+    let items = await getNovedades();
 
-    if (afterNewsletter.changed || afterPodcast.changed || afterTips.changed) {
-      await saveNovedades(afterTips.items);
+    try {
+      const merged = await mergeNewsletterSources(items);
+      newsletterAdded = merged.added;
+      if (merged.changed) {
+        items = await saveNovedades(merged.items);
+      } else {
+        items = merged.items;
+      }
+    } catch (error) {
+      console.error("[sync-novedades] newsletter falló", error);
+    }
+
+    try {
+      const merged = await mergeVideoSources(items, "podcast");
+      podcastAdded = merged.added;
+      if (merged.changed) {
+        items = await saveNovedades(merged.items);
+      } else {
+        items = merged.items;
+      }
+    } catch (error) {
+      console.error("[sync-novedades] podcast falló", error);
+    }
+
+    try {
+      const merged = await mergeVideoSources(items, "tip");
+      tipsAdded = merged.added;
+      if (merged.changed) {
+        items = await saveNovedades(merged.items);
+      } else {
+        items = merged.items;
+      }
+    } catch (error) {
+      console.error("[sync-novedades] tips falló", error);
     }
 
     return {
-      newsletterAdded: afterNewsletter.added,
-      podcastAdded: afterPodcast.added,
-      tipsAdded: afterTips.added,
-      total: afterTips.items.length,
+      newsletterAdded,
+      podcastAdded,
+      tipsAdded,
+      total: items.length,
     };
   });
 }
